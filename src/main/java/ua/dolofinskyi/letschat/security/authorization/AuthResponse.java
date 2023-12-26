@@ -7,5 +7,4 @@ import lombok.Data;
 @Builder
 public class AuthResponse {
     private String authorization;
-    private String subject;
 }

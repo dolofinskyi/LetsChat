@@ -25,7 +25,7 @@ public class LoginService implements ActionService<LoginDetails> {
         User user = process(details);
         String token = jwtUtil.generateToken(user.getUsername(), user.getSecret());
         authProvider.auth(request, details);
-        return AuthResponse.builder().authorization(token).subject(user.getUsername()).build();
+        return AuthResponse.builder().authorization(token).build();
     }
 
     @Override
