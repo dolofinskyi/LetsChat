@@ -1,14 +1,19 @@
 package ua.dolofinskyi.letschat.security.authorization;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import ua.dolofinskyi.letschat.security.action.register.RegisterDetails;
+import ua.dolofinskyi.letschat.security.action.register.RegisterService;
 
 @Controller
 @RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthController {
+    private final RegisterService registerService;
+
     @GetMapping("/login")
     public ModelAndView getLogin() {
         return new ModelAndView("login");
@@ -27,7 +32,7 @@ public class AuthController {
 
     @PostMapping("/register")
     @ResponseBody
-    public void postRegister() {
-
+    public AuthResponse postRegister(HttpServletRequest request, @RequestBody RegisterDetails details) {
+        return registerService.action(request, details);
     }
 }
