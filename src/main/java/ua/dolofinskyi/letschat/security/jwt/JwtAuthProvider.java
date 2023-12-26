@@ -10,12 +10,13 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Component;
+import ua.dolofinskyi.letschat.security.cookie.CookieService;
 
 import java.util.Collections;
 
 @Component
 @RequiredArgsConstructor
-public class JwtAuthProvider implements AuthenticationProvider {
+public class JwtAuthProvider implements AuthenticationProvider, CookieService {
     private final JwtUtil jwtUtil;
 
     public void auth(HttpServletRequest request, String subject, String token) {
@@ -41,7 +42,15 @@ public class JwtAuthProvider implements AuthenticationProvider {
         return UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication);
     }
 
-    public boolean isDataValid(String subject, String token) {
+    public boolean isValidData(String subject, String token) {
         return subject != null && token != null && jwtUtil.verifyToken(subject, token);
+    }
+
+    public String getAuthTokenFromHeader(HttpServletRequest request) {;
+        String token = request.getHeader("Authorization");
+        if (token != null) {
+            return token.substring(7);
+        }
+        return null;
     }
 }

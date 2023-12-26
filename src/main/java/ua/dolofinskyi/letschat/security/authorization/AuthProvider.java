@@ -2,6 +2,7 @@ package ua.dolofinskyi.letschat.security.authorization;
 
 import com.sun.security.auth.UserPrincipal;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -15,12 +16,13 @@ import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Component;
 import ua.dolofinskyi.letschat.features.user.UserService;
 import ua.dolofinskyi.letschat.security.action.ActionDetails;
+import ua.dolofinskyi.letschat.security.cookie.CookieService;
 
 import java.util.Collections;
 
 @Component
 @RequiredArgsConstructor
-public class AuthProvider implements AuthenticationProvider {
+public class AuthProvider implements AuthenticationProvider, CookieService {
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
 

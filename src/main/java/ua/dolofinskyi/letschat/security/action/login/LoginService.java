@@ -1,6 +1,7 @@
 package ua.dolofinskyi.letschat.security.action.login;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -9,7 +10,6 @@ import ua.dolofinskyi.letschat.features.user.User;
 import ua.dolofinskyi.letschat.features.user.UserService;
 import ua.dolofinskyi.letschat.security.action.ActionService;
 import ua.dolofinskyi.letschat.security.authorization.AuthProvider;
-import ua.dolofinskyi.letschat.security.authorization.AuthResponse;
 import ua.dolofinskyi.letschat.security.jwt.JwtUtil;
 
 @Service
@@ -21,11 +21,13 @@ public class LoginService implements ActionService<LoginDetails> {
     private final JwtUtil jwtUtil;
 
     @Override
-    public AuthResponse action(HttpServletRequest request, LoginDetails details) {
+    public void action(HttpServletRequest request, HttpServletResponse response,
+                               LoginDetails details) {
         User user = process(details);
         String token = jwtUtil.generateToken(user.getUsername(), user.getSecret());
         authProvider.auth(request, details);
-        return AuthResponse.builder().authorization(token).build();
+        authProvider.setCookie(response, "Authorization", token);
+        authProvider.setCookie(response, "Subject", user.getUsername());
     }
 
     @Override

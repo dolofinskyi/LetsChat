@@ -2,6 +2,7 @@ package ua.dolofinskyi.letschat.security.jwt;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -20,12 +21,15 @@ public class JwtFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
-        String subject = request.getHeader("Subject");
-        String token = getAuthTokenFromHeader(request);
-        boolean isUriSecured = endpointHolder.isUriSecured(request.getRequestURI());
+        if (request.getCookies() == null) {
+            filterChain.doFilter(request, response);
+            return;
+        }
 
-        if (!jwtAuthProvider.isDataValid(subject, token)) {
-            if (isUriSecured) {
+        String subject = jwtAuthProvider.getCookie(request, "Subject");
+        String token = jwtAuthProvider.getCookie(request, "Authorization");
+        if (!jwtAuthProvider.isValidData(subject, token)) {
+            if (endpointHolder.isUriSecured(request.getRequestURI())) {
                 response.sendRedirect("/auth/login");
             } else {
                 filterChain.doFilter(request, response);
@@ -37,11 +41,5 @@ public class JwtFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
-    private String getAuthTokenFromHeader(HttpServletRequest request) {;
-        String token = request.getHeader("Authorization");
-        if (token != null) {
-            return token.substring(7);
-        }
-        return null;
-    }
+
 }
