@@ -1,10 +1,10 @@
 package ua.dolofinskyi.letschat.security.authorization;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 import ua.dolofinskyi.letschat.security.action.login.LoginDetails;
 import ua.dolofinskyi.letschat.security.action.login.LoginService;
 import ua.dolofinskyi.letschat.security.action.register.RegisterDetails;
@@ -18,24 +18,26 @@ public class AuthController {
     private final LoginService loginService;
 
     @GetMapping("/login")
-    public ModelAndView getLogin() {
-        return new ModelAndView("login");
+    public String getLogin() {
+        return "login";
     }
 
     @PostMapping("/login")
-    @ResponseBody
-    public AuthResponse postLogin(HttpServletRequest request, @RequestBody LoginDetails details) {
-        return loginService.action(request, details);
+    public String postLogin(HttpServletRequest request, HttpServletResponse response,
+                          @RequestBody LoginDetails details) {
+        loginService.action(request, response, details);
+        return "redirect:app";
     }
 
     @GetMapping("/register")
-    public ModelAndView getRegister() {
-        return new ModelAndView("register");
+    public String getRegister() {
+        return "register";
     }
 
     @PostMapping("/register")
-    @ResponseBody
-    public AuthResponse postRegister(HttpServletRequest request, @RequestBody RegisterDetails details) {
-        return registerService.action(request, details);
+    public String postRegister(HttpServletRequest request, HttpServletResponse response,
+                             @RequestBody RegisterDetails details) {
+        registerService.action(request, response, details);
+        return "redirect:app";
     }
 }
