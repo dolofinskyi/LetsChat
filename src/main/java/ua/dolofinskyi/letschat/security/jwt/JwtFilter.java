@@ -5,7 +5,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.filter.OncePerRequestFilter;
-import ua.dolofinskyi.letschat.security.config.EndpointHolder;
+import ua.dolofinskyi.letschat.security.configuration.EndpointHolder;
 
 import java.io.IOException;
 
