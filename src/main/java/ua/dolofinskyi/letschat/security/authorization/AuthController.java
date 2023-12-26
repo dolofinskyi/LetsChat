@@ -5,6 +5,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import ua.dolofinskyi.letschat.security.action.login.LoginDetails;
+import ua.dolofinskyi.letschat.security.action.login.LoginService;
 import ua.dolofinskyi.letschat.security.action.register.RegisterDetails;
 import ua.dolofinskyi.letschat.security.action.register.RegisterService;
 
@@ -13,6 +15,7 @@ import ua.dolofinskyi.letschat.security.action.register.RegisterService;
 @RequiredArgsConstructor
 public class AuthController {
     private final RegisterService registerService;
+    private final LoginService loginService;
 
     @GetMapping("/login")
     public ModelAndView getLogin() {
@@ -21,8 +24,8 @@ public class AuthController {
 
     @PostMapping("/login")
     @ResponseBody
-    public void postLogin() {
-
+    public AuthResponse postLogin(HttpServletRequest request, @RequestBody LoginDetails details) {
+        return loginService.action(request, details);
     }
 
     @GetMapping("/register")
