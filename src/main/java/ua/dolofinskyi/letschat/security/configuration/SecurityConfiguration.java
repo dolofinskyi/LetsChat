@@ -7,10 +7,12 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import ua.dolofinskyi.letschat.security.cookie.CookieService;
 import ua.dolofinskyi.letschat.security.endpoint.EndpointService;
 import ua.dolofinskyi.letschat.security.jwt.JwtAuthProvider;
 import ua.dolofinskyi.letschat.security.jwt.JwtFilter;
@@ -19,15 +21,18 @@ import ua.dolofinskyi.letschat.security.jwt.JwtFilter;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfiguration {
-    private final EndpointService endpointService;
     private final JwtAuthProvider jwtAuthProvider;
+    private final EndpointService endpointService;
+    private final CookieService cookieService;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.addFilterBefore(new JwtFilter(endpointService, jwtAuthProvider), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(new JwtFilter(jwtAuthProvider, endpointService, cookieService), UsernamePasswordAuthenticationFilter.class);
         http.formLogin(AbstractHttpConfigurer::disable);
         http.logout(LogoutConfigurer::permitAll);
         http.csrf(AbstractHttpConfigurer::disable);
+        http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
         http.authorizeHttpRequests(request -> {
                     endpointService.getSecuredUrls().forEach(uri -> request.requestMatchers(uri).authenticated());
                     request.anyRequest().permitAll();

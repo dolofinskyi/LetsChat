@@ -10,6 +10,7 @@ import ua.dolofinskyi.letschat.features.user.UserService;
 import ua.dolofinskyi.letschat.security.action.ActionService;
 import ua.dolofinskyi.letschat.security.authorization.AuthProvider;
 import ua.dolofinskyi.letschat.security.authorization.AuthResponse;
+import ua.dolofinskyi.letschat.security.cookie.CookieService;
 import ua.dolofinskyi.letschat.security.jwt.JwtUtil;
 
 import java.util.Objects;
@@ -21,6 +22,7 @@ public class RegisterService implements ActionService<RegisterDetails> {
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
     private final AuthProvider authProvider;
+    private final CookieService cookieService;
 
     @Override
     public AuthResponse doAction(HttpServletRequest request, HttpServletResponse response, RegisterDetails details) {
@@ -30,8 +32,8 @@ public class RegisterService implements ActionService<RegisterDetails> {
         User user = (User) userService.loadUserByUsername(details.getUsername());
         String token = jwtUtil.generateToken(user.getUsername(), user.getSecret());
         authProvider.auth(request, details);
-        authProvider.setCookie(response, "Authorization", token);
-        authProvider.setCookie(response, "Subject", user.getUsername());
+        cookieService.setCookie(response, "Authorization", token);
+        cookieService.setCookie(response, "Subject", user.getUsername());
         return AuthResponse.builder().authorization(token).build();
     }
 

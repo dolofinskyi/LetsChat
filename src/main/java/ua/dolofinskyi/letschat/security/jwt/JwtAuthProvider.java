@@ -16,7 +16,7 @@ import java.util.Collections;
 
 @Component
 @RequiredArgsConstructor
-public class JwtAuthProvider implements AuthenticationProvider, CookieService {
+public class JwtAuthProvider implements AuthenticationProvider {
     private final JwtUtil jwtUtil;
 
     public void auth(HttpServletRequest request, String subject, String token) {
