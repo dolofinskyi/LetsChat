@@ -24,7 +24,7 @@ public class LoginService implements ActionService<LoginDetails> {
     @Override
     public AuthResponse doAction(HttpServletRequest request, HttpServletResponse response,
                                LoginDetails details) {
-        if (!verify(details)) {
+        if (!validate(details)) {
             return AuthResponse.builder().build();
         }
         User user = (User) userService.loadUserByUsername(details.getUsername());
@@ -36,7 +36,7 @@ public class LoginService implements ActionService<LoginDetails> {
     }
 
     @Override
-    public boolean verify(LoginDetails details) {
+    public boolean validate(LoginDetails details) {
         if (!userService.isUserExist(details.getUsername())) {
             //TODO throw UserNotFoundException
             return false;

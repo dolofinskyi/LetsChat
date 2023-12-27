@@ -24,7 +24,7 @@ public class RegisterService implements ActionService<RegisterDetails> {
 
     @Override
     public AuthResponse doAction(HttpServletRequest request, HttpServletResponse response, RegisterDetails details) {
-        if (!verify(details)) {
+        if (!validate(details)) {
             return AuthResponse.builder().build();
         }
         User user = (User) userService.loadUserByUsername(details.getUsername());
@@ -36,7 +36,7 @@ public class RegisterService implements ActionService<RegisterDetails> {
     }
 
     @Override
-    public boolean verify(RegisterDetails details) {
+    public boolean validate(RegisterDetails details) {
         if (userService.isUserExist(details.getUsername())) {
             //TODO throw UserFoundException
             return false;
