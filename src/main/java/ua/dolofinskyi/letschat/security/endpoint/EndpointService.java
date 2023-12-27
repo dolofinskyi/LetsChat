@@ -1,11 +1,10 @@
-package ua.dolofinskyi.letschat.security.configuration;
+package ua.dolofinskyi.letschat.security.endpoint;
 
-import org.springframework.stereotype.Component;
-
+import org.springframework.stereotype.Service;
 import java.util.List;
 
-@Component
-public class EndpointHolder {
+@Service
+public class EndpointService {
     private final List<String> SECURED_URLS = List.of("/app");
     private final List<String> UNSECURED_URLS = List.of("/register", "/login");
 
