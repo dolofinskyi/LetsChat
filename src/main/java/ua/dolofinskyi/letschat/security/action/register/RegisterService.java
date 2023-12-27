@@ -9,6 +9,7 @@ import ua.dolofinskyi.letschat.features.user.User;
 import ua.dolofinskyi.letschat.features.user.UserService;
 import ua.dolofinskyi.letschat.security.action.ActionService;
 import ua.dolofinskyi.letschat.security.authorization.AuthProvider;
+import ua.dolofinskyi.letschat.security.authorization.AuthResponse;
 import ua.dolofinskyi.letschat.security.jwt.JwtUtil;
 
 import java.util.Objects;
@@ -22,29 +23,34 @@ public class RegisterService implements ActionService<RegisterDetails> {
     private final AuthProvider authProvider;
 
     @Override
-    public void action(HttpServletRequest request, HttpServletResponse response, RegisterDetails details) {
-        User user = process(details);
+    public AuthResponse doAction(HttpServletRequest request, HttpServletResponse response, RegisterDetails details) {
+        if (!verify(details)) {
+            return AuthResponse.builder().build();
+        }
+        User user = (User) userService.loadUserByUsername(details.getUsername());
         String token = jwtUtil.generateToken(user.getUsername(), user.getSecret());
         authProvider.auth(request, details);
         authProvider.setCookie(response, "Authorization", token);
         authProvider.setCookie(response, "Subject", user.getUsername());
+        return AuthResponse.builder().authorization(token).build();
     }
 
     @Override
-    public User process(RegisterDetails details) {
+    public boolean verify(RegisterDetails details) {
         if (userService.isUserExist(details.getUsername())) {
             //TODO throw UserFoundException
-            throw new RuntimeException();
+            return false;
         }
         if (!Objects.equals(details.getPassword(), details.getRepeatPassword())) {
             //TODO throw InvalidPasswordException
-            throw new RuntimeException();
+            return false;
         }
         User user = userService.createUser(
                 details.getUsername(),
                 passwordEncoder.encode(details.getPassword()),
                 jwtUtil.generateSecret()
         );
-        return userService.add(user);
+        userService.add(user);
+        return true;
     }
 }

@@ -23,10 +23,10 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public String postLogin(HttpServletRequest request, HttpServletResponse response,
-                          @RequestBody LoginDetails details) {
-        loginService.action(request, response, details);
-        return "redirect:app";
+    @ResponseBody
+    public AuthResponse postLogin(HttpServletRequest request, HttpServletResponse response,
+                                  @RequestBody LoginDetails details) {
+        return loginService.doAction(request, response, details);
     }
 
     @GetMapping("/register")
@@ -35,9 +35,9 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public String postRegister(HttpServletRequest request, HttpServletResponse response,
+    @ResponseBody
+    public AuthResponse postRegister(HttpServletRequest request, HttpServletResponse response,
                              @RequestBody RegisterDetails details) {
-        registerService.action(request, response, details);
-        return "redirect:app";
+        return registerService.doAction(request, response, details);
     }
 }
