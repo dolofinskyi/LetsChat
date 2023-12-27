@@ -1,4 +1,4 @@
-package ua.dolofinskyi.letschat.security.authorization;
+package ua.dolofinskyi.letschat.security.authetication;
 
 import lombok.Builder;
 import lombok.Data;
