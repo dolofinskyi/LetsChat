@@ -14,8 +14,8 @@ public class CookieService {
         response.addCookie(cookie);
     }
 
-    public String getCookie(HttpServletRequest request, String name) {
-        for (Cookie cookie: request.getCookies()) {
+    public String getCookie(Cookie[] cookies, String name) {
+        for (Cookie cookie: cookies) {
             if (cookie.getName().equals(name)) {
                 return cookie.getValue();
             }

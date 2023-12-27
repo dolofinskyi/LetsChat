@@ -1,13 +1,11 @@
-const registerButton = document.querySelector(".register-btn");
+const registerButton = document.querySelector(".login-btn");
 const usernameField = document.querySelector("#username");
 const passwordField = document.querySelector("#password");
-const repeatPasswordField = document.querySelector("#repeat-password");
 
 registerButton.onclick = async () => {
     const data = {
         "username": usernameField.value,
         "password": passwordField.value,
-        "repeatPassword": repeatPasswordField.value,
     };
 
     const settings = {
@@ -18,7 +16,7 @@ registerButton.onclick = async () => {
         body: JSON.stringify(data),
     };
 
-    await fetch("/auth/register", settings)
+    await fetch("/auth/login", settings)
     .then(resp => resp.json())
     .then(data => {
         if(data.authorization !== null) {
