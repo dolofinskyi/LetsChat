@@ -7,36 +7,34 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.filter.OncePerRequestFilter;
 import ua.dolofinskyi.letschat.security.cookie.CookieService;
-import ua.dolofinskyi.letschat.security.endpoint.EndpointService;
+import ua.dolofinskyi.letschat.security.filter.FilterService;
 
 import java.io.IOException;
 
 @RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
     private final JwtAuthProvider jwtAuthProvider;
-    private final EndpointService endpointService;
+    private final FilterService filterService;
     private final CookieService cookieService;
-
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
         if (request.getCookies() == null) {
-            filterChain.doFilter(request, response);
+            filterService.redirect(request, response, filterChain, "/auth/login");
             return;
         }
 
-        String subject = cookieService.getCookie(request, "Subject");
-        String token = cookieService.getCookie(request, "Authorization");
+        String subject = cookieService.getCookie(request.getCookies(), "Subject");
+        String token = cookieService.getCookie(request.getCookies(), "Authorization");
+
         if (!jwtAuthProvider.isValidData(subject, token)) {
-            if (endpointService.isUriSecured(request.getRequestURI())) {
-                response.sendRedirect("/auth/login");
-            } else {
-                filterChain.doFilter(request, response);
-            }
+            filterService.redirect(request, response, filterChain, "/auth/login");
             return;
         }
 
         jwtAuthProvider.auth(request, subject, token);
         filterChain.doFilter(request, response);
     }
+
+
 }
