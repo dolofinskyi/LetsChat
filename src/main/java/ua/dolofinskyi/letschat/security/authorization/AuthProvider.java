@@ -15,7 +15,6 @@ import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Component;
 import ua.dolofinskyi.letschat.features.user.UserService;
 import ua.dolofinskyi.letschat.security.action.ActionDetails;
-import ua.dolofinskyi.letschat.security.cookie.CookieService;
 
 import java.util.Collections;
 
