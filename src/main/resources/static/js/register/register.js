@@ -20,24 +20,11 @@ registerButton.onclick = async () => {
         body: JSON.stringify(data),
     };
 
-    const response = await fetch("/auth/register", settings);
-    const result = await response.json();
-
-    if (result.authorization !== null) {
-        localStorage.setItem("authorization", result.authorization);
-        localStorage.setItem("subject", usernameField.value);
-
-        const redirect = await fetch("/app", {
-            method: "GET",
-            headers: {
-                "Authorization": "Bearer " + result.authorization,
-                "Subject": usernameField.value,
-            },
-        }).then(page => page.text()).then(content => {
-            window.history.pushState({location: "app"}, "App", "/app");
-            document.open();
-            document.write(content);
-            document.close();
-        });
-    }
+    await fetch("/auth/register", settings)
+    .then(resp => resp.json())
+    .then(data => {
+        if(data.authorization !== null) {
+            window.location.replace("/app");
+        }
+    });
 }

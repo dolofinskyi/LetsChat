@@ -3,8 +3,9 @@ package ua.dolofinskyi.letschat.security.action;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import ua.dolofinskyi.letschat.features.user.User;
+import ua.dolofinskyi.letschat.security.authorization.AuthResponse;
 
 public interface ActionService<T extends ActionDetails> {
-    void action(HttpServletRequest request, HttpServletResponse response, T details);
-    User process(T details);
+    AuthResponse doAction(HttpServletRequest request, HttpServletResponse response, T details);
+    boolean verify(T details);
 }
