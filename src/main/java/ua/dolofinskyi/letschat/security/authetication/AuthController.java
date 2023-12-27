@@ -1,4 +1,4 @@
-package ua.dolofinskyi.letschat.security.authorization;
+package ua.dolofinskyi.letschat.security.authetication;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

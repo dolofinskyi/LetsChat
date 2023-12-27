@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 import ua.dolofinskyi.letschat.features.user.User;
 import ua.dolofinskyi.letschat.features.user.UserService;
 import ua.dolofinskyi.letschat.security.action.ActionService;
-import ua.dolofinskyi.letschat.security.authorization.AuthProvider;
-import ua.dolofinskyi.letschat.security.authorization.AuthResponse;
+import ua.dolofinskyi.letschat.security.authetication.AuthProvider;
+import ua.dolofinskyi.letschat.security.authetication.AuthResponse;
 import ua.dolofinskyi.letschat.security.cookie.CookieService;
 import ua.dolofinskyi.letschat.security.jwt.JwtUtil;
 
