@@ -45,12 +45,4 @@ public class JwtAuthProvider implements AuthenticationProvider, CookieService {
     public boolean isValidData(String subject, String token) {
         return subject != null && token != null && jwtUtil.verifyToken(subject, token);
     }
-
-    public String getAuthTokenFromHeader(HttpServletRequest request) {;
-        String token = request.getHeader("Authorization");
-        if (token != null) {
-            return token.substring(7);
-        }
-        return null;
-    }
 }

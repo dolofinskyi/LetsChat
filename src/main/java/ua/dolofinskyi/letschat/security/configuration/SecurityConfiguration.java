@@ -11,6 +11,7 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import ua.dolofinskyi.letschat.security.endpoint.EndpointService;
 import ua.dolofinskyi.letschat.security.jwt.JwtAuthProvider;
 import ua.dolofinskyi.letschat.security.jwt.JwtFilter;
 
@@ -18,17 +19,17 @@ import ua.dolofinskyi.letschat.security.jwt.JwtFilter;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfiguration {
+    private final EndpointService endpointService;
     private final JwtAuthProvider jwtAuthProvider;
-    private final EndpointHolder endpointHolder;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.addFilterBefore(new JwtFilter(endpointHolder, jwtAuthProvider), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(new JwtFilter(endpointService, jwtAuthProvider), UsernamePasswordAuthenticationFilter.class);
         http.formLogin(AbstractHttpConfigurer::disable);
         http.logout(LogoutConfigurer::permitAll);
         http.csrf(AbstractHttpConfigurer::disable);
         http.authorizeHttpRequests(request -> {
-                    endpointHolder.getSecuredUrls().forEach(uri -> request.requestMatchers(uri).authenticated());
+                    endpointService.getSecuredUrls().forEach(uri -> request.requestMatchers(uri).authenticated());
                     request.anyRequest().permitAll();
                 }
         );
