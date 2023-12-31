@@ -26,16 +26,16 @@ public class JwtUtil {
     @Value("${jwt.algorithm}")
     private String algorithm;
     private final UserService userService;
-    private String SIGNATURE_ALGORITHM;
+    private String SIGNATURE_JCA_NAME;
 
     @PostConstruct
     private void init() {
-        SIGNATURE_ALGORITHM = SignatureAlgorithm.forName(algorithm).getJcaName();
+        SIGNATURE_JCA_NAME = SignatureAlgorithm.forName(algorithm).getJcaName();
     }
 
     public SecretKey generateSecretKey(String secret) {
         byte[] bytes = secret.getBytes(StandardCharsets.UTF_8);
-        return new SecretKeySpec(bytes, SIGNATURE_ALGORITHM);
+        return new SecretKeySpec(bytes, SIGNATURE_JCA_NAME);
     }
 
     public String generateToken(String subject, String secret) {
@@ -54,7 +54,7 @@ public class JwtUtil {
 
     public String generateSecret() {
         try {
-            SecretKey key = KeyGenerator.getInstance(SIGNATURE_ALGORITHM).generateKey();
+            SecretKey key = KeyGenerator.getInstance(SIGNATURE_JCA_NAME).generateKey();
             return new String(key.getEncoded(), StandardCharsets.UTF_8);
         } catch (NoSuchAlgorithmException ignored) {
 
