@@ -13,8 +13,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Component;
+import ua.dolofinskyi.letschat.features.user.User;
 import ua.dolofinskyi.letschat.features.user.UserService;
-import ua.dolofinskyi.letschat.security.action.ActionDetails;
 
 import java.util.Collections;
 
@@ -24,7 +24,7 @@ public class AuthProvider implements AuthenticationProvider {
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
 
-    public void auth(HttpServletRequest request, ActionDetails details) {
+    public void authenticate(HttpServletRequest request, AuthDetails details) {
         UserPrincipal principal = new UserPrincipal(details.getUsername());
         UsernamePasswordAuthenticationToken token =
                 new UsernamePasswordAuthenticationToken(principal, details.getPassword());

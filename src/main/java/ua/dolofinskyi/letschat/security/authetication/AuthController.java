@@ -26,7 +26,7 @@ public class AuthController {
     @ResponseBody
     public AuthResponse postLogin(HttpServletRequest request, HttpServletResponse response,
                                   @RequestBody LoginDetails details) {
-        return loginService.doAction(request, response, details);
+        return loginService.login(request, response, details);
     }
 
     @GetMapping("/register")
@@ -38,6 +38,6 @@ public class AuthController {
     @ResponseBody
     public AuthResponse postRegister(HttpServletRequest request, HttpServletResponse response,
                              @RequestBody RegisterDetails details) {
-        return registerService.doAction(request, response, details);
+        return registerService.register(request, response, details);
     }
 }

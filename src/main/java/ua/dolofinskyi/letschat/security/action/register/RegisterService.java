@@ -7,7 +7,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ua.dolofinskyi.letschat.features.user.User;
 import ua.dolofinskyi.letschat.features.user.UserService;
-import ua.dolofinskyi.letschat.security.action.ActionService;
 import ua.dolofinskyi.letschat.security.authetication.AuthProvider;
 import ua.dolofinskyi.letschat.security.authetication.AuthResponse;
 import ua.dolofinskyi.letschat.security.cookie.CookieService;
@@ -17,27 +16,25 @@ import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
-public class RegisterService implements ActionService<RegisterDetails> {
+public class RegisterService {
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
     private final AuthProvider authProvider;
     private final CookieService cookieService;
 
-    @Override
-    public AuthResponse doAction(HttpServletRequest request, HttpServletResponse response, RegisterDetails details) {
+    public AuthResponse register(HttpServletRequest request, HttpServletResponse response, RegisterDetails details) {
         if (!validate(details)) {
             return AuthResponse.builder().build();
         }
+        authProvider.authenticate(request, details);
         User user = (User) userService.loadUserByUsername(details.getUsername());
         String token = jwtUtil.generateToken(user.getUsername(), user.getSecret());
-        authProvider.auth(request, details);
         cookieService.setCookie(response, "Authorization", token);
         cookieService.setCookie(response, "Subject", user.getUsername());
         return AuthResponse.builder().authorization(token).build();
     }
 
-    @Override
     public boolean validate(RegisterDetails details) {
         if (userService.isUserExist(details.getUsername())) {
             //TODO throw UserFoundException
