@@ -9,7 +9,6 @@ import ua.dolofinskyi.letschat.features.user.User;
 import ua.dolofinskyi.letschat.features.user.UserService;
 import ua.dolofinskyi.letschat.security.authetication.AuthProvider;
 import ua.dolofinskyi.letschat.security.authetication.AuthResponse;
-import ua.dolofinskyi.letschat.security.cookie.CookieService;
 import ua.dolofinskyi.letschat.security.jwt.JwtUtil;
 
 import java.util.Objects;
@@ -21,35 +20,29 @@ public class RegisterService {
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
     private final AuthProvider authProvider;
-    private final CookieService cookieService;
 
     public AuthResponse register(HttpServletRequest request, HttpServletResponse response, RegisterDetails details) {
-        if (!validate(details)) {
+        if (!valid(details)) {
             return AuthResponse.builder().build();
-        }
-        authProvider.authenticate(request, details);
-        User user = (User) userService.loadUserByUsername(details.getUsername());
-        String token = jwtUtil.generateToken(user.getUsername(), user.getSecret());
-        cookieService.setCookie(response, "Authorization", token);
-        cookieService.setCookie(response, "Subject", user.getUsername());
-        return AuthResponse.builder().authorization(token).build();
-    }
-
-    public boolean validate(RegisterDetails details) {
-        if (userService.isUserExist(details.getUsername())) {
-            //TODO throw UserFoundException
-            return false;
-        }
-        if (!Objects.equals(details.getPassword(), details.getRepeatPassword())) {
-            //TODO throw InvalidPasswordException
-            return false;
         }
         User user = userService.createUser(
                 details.getUsername(),
                 passwordEncoder.encode(details.getPassword()),
                 jwtUtil.generateSecret()
         );
+        String token = jwtUtil.generateToken(user);
         userService.add(user);
-        return true;
+        authProvider.setAuthenticationCookies(response, user.getUsername(), token);
+        authProvider.authenticate(request, details);
+        return AuthResponse.builder().token(token).build();
+    }
+
+    public boolean valid(RegisterDetails details) {
+        if (userService.isUserExist(details.getUsername())) {
+            //TODO throw UserFoundException
+            return false;
+        }
+        //TODO throw InvalidPasswordException
+        return Objects.equals(details.getPassword(), details.getRepeatPassword());
     }
 }

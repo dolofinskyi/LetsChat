@@ -18,7 +18,7 @@ import java.util.Collections;
 public class JwtAuthProvider implements AuthenticationProvider {
     private final JwtUtil jwtUtil;
 
-    public void auth(HttpServletRequest request, String subject, String token) {
+    public void authenticate(HttpServletRequest request, String subject, String token) {
         UserPrincipal principal = new UserPrincipal(subject);
         UsernamePasswordAuthenticationToken user =
                 new UsernamePasswordAuthenticationToken(principal, token);

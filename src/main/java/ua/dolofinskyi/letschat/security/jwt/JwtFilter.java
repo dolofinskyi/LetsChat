@@ -23,16 +23,15 @@ public class JwtFilter extends OncePerRequestFilter {
             filterService.redirect(request, response, filterChain, "/auth/login");
             return;
         }
-
         String subject = cookieService.getCookie(request.getCookies(), "Subject");
-        String token = cookieService.getCookie(request.getCookies(), "Authorization");
+        String token = cookieService.getCookie(request.getCookies(), "Token");
 
         if (!jwtAuthProvider.isValidData(subject, token)) {
             filterService.redirect(request, response, filterChain, "/auth/login");
             return;
         }
 
-        jwtAuthProvider.auth(request, subject, token);
+        jwtAuthProvider.authenticate(request, subject, token);
         filterChain.doFilter(request, response);
     }
 
