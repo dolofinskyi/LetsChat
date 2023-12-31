@@ -37,7 +37,7 @@ public class AuthController {
     @PostMapping("/register")
     @ResponseBody
     public AuthResponse postRegister(HttpServletRequest request, HttpServletResponse response,
-                             @RequestBody RegisterDetails details) {
+                                     @RequestBody RegisterDetails details) {
         return registerService.register(request, response, details);
     }
 }

@@ -38,17 +38,17 @@ public class JwtUtil {
         return new SecretKeySpec(bytes, SIGNATURE_JCA_NAME);
     }
 
-    public String generateToken(String subject, String secret) {
+    public String generateToken(User user) {
         Date now = new Date();
         Date exp = new Date(now.getTime() + expiration);
 
         return Jwts.builder()
                 .id(generateSecret())
-                .subject(subject)
+                .subject(user.getUsername())
                 .issuedAt(now)
                 .notBefore(now)
                 .expiration(exp)
-                .signWith(generateSecretKey(secret))
+                .signWith(generateSecretKey(user.getSecret()))
                 .compact();
     }
 
@@ -64,8 +64,7 @@ public class JwtUtil {
 
     public boolean verifyToken(String subject, String token) {
         try {
-            User user = (User) userService.loadUserByUsername(subject);
-            String secret = user.getSecret();
+            String secret = ((User) userService.loadUserByUsername(subject)).getSecret();
             Jwts.parser()
                     .verifyWith(generateSecretKey(secret))
                     .build()

@@ -21,7 +21,7 @@ registerButton.onclick = async () => {
     await fetch("/auth/register", settings)
     .then(resp => resp.json())
     .then(data => {
-        if(data.authorization !== null) {
+        if(data.token !== null) {
             window.location.replace("/app");
         }
     });
