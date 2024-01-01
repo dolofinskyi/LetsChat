@@ -6,6 +6,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.filter.OncePerRequestFilter;
+import ua.dolofinskyi.letschat.features.user.User;
+import ua.dolofinskyi.letschat.features.user.UserService;
+import ua.dolofinskyi.letschat.security.authetication.AuthProvider;
 import ua.dolofinskyi.letschat.security.cookie.CookieService;
 import ua.dolofinskyi.letschat.security.filter.FilterService;
 
@@ -13,7 +16,7 @@ import java.io.IOException;
 
 @RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
-    private final JwtAuthProvider jwtAuthProvider;
+    private final AuthProvider authProvider;
     private final FilterService filterService;
     private final CookieService cookieService;
     @Override
@@ -26,12 +29,13 @@ public class JwtFilter extends OncePerRequestFilter {
         String subject = cookieService.getCookie(request.getCookies(), "Subject");
         String token = cookieService.getCookie(request.getCookies(), "Token");
 
-        if (!jwtAuthProvider.isValidData(subject, token)) {
+        if (filterService.isUriSecured(request.getRequestURI()) &&
+                !authProvider.isValidData(subject, token)) {
             filterService.redirect(request, response, filterChain, "/auth/login");
             return;
         }
 
-        jwtAuthProvider.authenticate(request, subject, token);
+        authProvider.authenticateUser(request, response, subject);
         filterChain.doFilter(request, response);
     }
 

@@ -5,7 +5,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import ua.dolofinskyi.letschat.features.user.User;
 import ua.dolofinskyi.letschat.features.user.UserService;
 import ua.dolofinskyi.letschat.security.authetication.AuthProvider;
 import ua.dolofinskyi.letschat.security.authetication.AuthResponse;
@@ -22,8 +21,7 @@ public class LoginService {
         if (!valid(details)) {
             return AuthResponse.builder().build();
         }
-        User user = (User) userService.loadUserByUsername(details.getUsername());
-        return authProvider.authenticateUser(request, response, user, details);
+        return authProvider.authenticateUser(request, response, details.getUsername());
     }
 
     public boolean valid(LoginDetails details) {
