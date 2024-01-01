@@ -1,4 +1,4 @@
-package ua.dolofinskyi.letschat.app;
+package ua.dolofinskyi.letschat.features.app;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

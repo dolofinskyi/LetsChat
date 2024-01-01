@@ -27,8 +27,4 @@ public class FilterService {
     public boolean isUriSecured(String uri) {
         return endpointService.isUriSecured(uri);
     }
-
-    public boolean isUriUnsecured(String uri) {
-        return endpointService.isUriUnsecured(uri);
-    }
 }

@@ -6,8 +6,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.filter.OncePerRequestFilter;
-import ua.dolofinskyi.letschat.features.user.User;
-import ua.dolofinskyi.letschat.features.user.UserService;
 import ua.dolofinskyi.letschat.security.authetication.AuthProvider;
 import ua.dolofinskyi.letschat.security.cookie.CookieService;
 import ua.dolofinskyi.letschat.security.filter.FilterService;
@@ -38,6 +36,4 @@ public class JwtFilter extends OncePerRequestFilter {
         authProvider.authenticateUser(request, response, subject);
         filterChain.doFilter(request, response);
     }
-
-
 }
