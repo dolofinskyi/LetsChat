@@ -30,11 +30,8 @@ public class RegisterService {
                 passwordEncoder.encode(details.getPassword()),
                 jwtUtil.generateSecret()
         );
-        String token = jwtUtil.generateToken(user);
         userService.add(user);
-        authProvider.setAuthenticationCookies(response, user.getUsername(), token);
-        authProvider.authenticate(request, details);
-        return AuthResponse.builder().token(token).build();
+        return authProvider.authenticateUser(request, response, user, details);
     }
 
     public boolean valid(RegisterDetails details) {
