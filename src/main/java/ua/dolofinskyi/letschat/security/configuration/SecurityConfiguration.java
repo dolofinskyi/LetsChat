@@ -12,24 +12,25 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import ua.dolofinskyi.letschat.security.authetication.AuthProvider;
 import ua.dolofinskyi.letschat.security.cookie.CookieService;
 import ua.dolofinskyi.letschat.security.endpoint.EndpointService;
 import ua.dolofinskyi.letschat.security.filter.FilterService;
-import ua.dolofinskyi.letschat.security.jwt.JwtAuthProvider;
 import ua.dolofinskyi.letschat.security.jwt.JwtFilter;
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfiguration {
-    private final JwtAuthProvider jwtAuthProvider;
+    private final AuthProvider authProvider;
     private final FilterService filterService;
     private final EndpointService endpointService;
     private final CookieService cookieService;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.addFilterBefore(new JwtFilter(jwtAuthProvider, filterService, cookieService), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(new JwtFilter(authProvider, filterService, cookieService),
+                UsernamePasswordAuthenticationFilter.class);
         http.formLogin(AbstractHttpConfigurer::disable);
         http.logout(LogoutConfigurer::permitAll);
         http.csrf(AbstractHttpConfigurer::disable);

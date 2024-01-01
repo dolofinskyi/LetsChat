@@ -25,13 +25,14 @@ public class RegisterService {
         if (!valid(details)) {
             return AuthResponse.builder().build();
         }
-        User user = userService.createUser(
-                details.getUsername(),
-                passwordEncoder.encode(details.getPassword()),
-                jwtUtil.generateSecret()
+        User user = userService.add(
+                userService.createUser(
+                        details.getUsername(),
+                        passwordEncoder.encode(details.getPassword()),
+                        jwtUtil.generateSecret()
+                )
         );
-        userService.add(user);
-        return authProvider.authenticateUser(request, response, user, details);
+        return authProvider.authenticateUser(request, response, user);
     }
 
     public boolean valid(RegisterDetails details) {
