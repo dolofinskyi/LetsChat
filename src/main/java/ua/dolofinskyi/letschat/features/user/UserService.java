@@ -7,7 +7,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import ua.dolofinskyi.letschat.features.service.CrudService;
 
-import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -52,7 +51,6 @@ public class UserService implements CrudService<User, String>, UserDetailsServic
                 .username(username)
                 .password(password)
                 .secret(secret)
-                .chats(Collections.emptySet())
                 .enabled(true)
                 .accountNonExpired(true)
                 .accountNonLocked(true)
