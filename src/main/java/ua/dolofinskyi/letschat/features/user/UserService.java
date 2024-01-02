@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import ua.dolofinskyi.letschat.features.service.CrudService;
 
-import java.util.List;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -38,12 +38,15 @@ public class UserService implements CrudService<User, String>, UserDetailsServic
 
     @Override
     public List<User> listAll() {
-        return repository.listAll();
+        List<User> list = new ArrayList<>();
+        Iterator<User> iterator = repository.findAll().iterator();
+        iterator.forEachRemaining(list::add);
+        return list;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return repository.findByUsername(username)
+        return findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException(username));
     }
     public User createUser(String username, String password, String secret) {
@@ -57,7 +60,14 @@ public class UserService implements CrudService<User, String>, UserDetailsServic
                 .build();
     }
 
+    public Optional<User> findByUsername(String username) {
+        return listAll()
+                .stream()
+                .filter(user -> Objects.equals(user.getUsername(), username))
+                .findFirst();
+    }
+
     public boolean isUserExist(String username) {
-        return repository.findByUsername(username).isPresent();
+        return findByUsername(username).isPresent();
     }
 }
