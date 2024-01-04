@@ -1,0 +1,237 @@
+.container {
+    width: 100%;
+    height: 100%;
+}
+
+.card {
+    background-color: var(--background-color);
+    border: 0;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+.chat-app .people-list {
+    min-width: 300px;
+    width: 20%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    z-index: 1
+}
+
+.chat-app .chat {
+    width: 85%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.people-list .search-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 100%;
+    height: 12.5%;
+    padding: 15px;
+}
+
+.people-list .search-container .input-search {
+    padding: 5px;
+    width: 75%;
+    border: none;
+    border-bottom: 1px solid var(--main-color);
+}
+
+.people-list .search-container .input-search:focus {
+    outline: none;
+}
+
+.people-list .search-container .search-button,
+.chat .send-container .send-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 7.5px 15px;
+}
+
+.people-list .chat-list {
+    display: flex;
+    flex-direction: column;
+    height: 87.5%;
+    overflow-y: scroll;
+}
+
+.user-container {
+    display: flex;
+    gap: 15px;
+    padding: 25px;
+    transition: 100ms;
+}
+
+.user-container .name {
+    font-size: 15px
+}
+
+input[name="user"] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    appearance: none;
+    margin-left: auto;
+    color: var(--main-color);
+}
+
+input[name="user"]:checked::after {
+    content: '/>';
+}
+
+input[name="user"]:not(:checked)::after {
+    content: '';
+}
+
+.people-list .chat-list li label:hover {
+    background: var(--highlight-color);
+    cursor: pointer;
+}
+
+.avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--background-color);
+    background-color: var(--main-color);
+    height: 45px;
+    width: 45px;
+    border-radius: 50%
+}
+
+.people-list .avatar {
+    float: left;
+}
+
+.people-list .status {
+    font-size: 13px;
+}
+
+.chat .chat-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 12.5%;
+    padding: 15px;
+    gap: 10px;
+}
+
+.chat .chat-header .avatar {
+    margin-left: 10px;
+    float: left;
+}
+
+.chat .chat-header .chat-about {
+    float: left;
+    padding-left: 10px
+}
+
+.status {
+    color: var(--description-color);
+}
+
+.chat .chat-history {
+    height: 77.5%;
+    padding: 20px;
+    overflow-y: scroll;
+}
+
+.chat .chat-history ul {
+    display: flex;
+    flex-direction: column;
+}
+
+.chat .chat-history ul li {
+    list-style: none;
+    margin-bottom: 20px;
+}
+
+.chat .chat-history ul li:last-child {
+    margin-bottom: 0px;
+}
+
+.chat .chat-history .message-container {
+    height: fit-content;
+    max-width: 75%;
+}
+
+.chat .chat-history .message {
+    color: var(--main-color);
+    padding: 18px 20px;
+    line-height: 26px;
+    font-size: 14px;
+    display: inline-block;
+    position: relative;
+}
+
+.chat .chat-history .my-message {
+    color: var(--background-color);
+    background-color: var(--main-color);
+}
+
+.chat .chat-history .other-message {
+    background-color: var(--highlight-color);
+}
+
+.message-container .message-data {
+    padding-left: 6px;
+    padding: 10px 0px;
+    font-size: 13px;
+}
+
+.message-container .message-data * {
+    color: var(--description-color);
+}
+
+.message-container .message-data .message-user-username:active {
+    color: var(--main-color);
+}
+
+.chat .send-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 10%;
+    padding: 15px;
+}
+
+.send-container .input-send {
+    width: 90%;
+    padding: 5px;
+    border: none;
+    border-bottom: 1px solid var(--main-color);
+}
+
+.send-container .input-send:focus {
+    outline: none;
+}
+
+.float-right {
+    margin-left: auto;
+}
+
+@media only screen and (max-width: 767px) {
+    .chat-app .people-list {
+        width: 100%;
+        overflow-x: auto;
+        left: -15%;
+        display: none
+    }
+    .chat-app .people-list.open {
+        left: 0
+    }
+    .chat-app .chat {
+        width: 100%;
+    }
+    .chat-app .chat .chat-header {
+        border-radius: 0.55rem 0.55rem 0 0
+    }
+}
