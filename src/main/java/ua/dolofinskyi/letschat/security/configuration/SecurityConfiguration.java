@@ -37,7 +37,7 @@ public class SecurityConfiguration {
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         http.authorizeHttpRequests(request -> {
-                    endpointService.getSecuredUrls().forEach(uri -> request.requestMatchers(uri).authenticated());
+                    endpointService.getSecuredUrlPatterns().forEach(uri -> request.requestMatchers(uri).authenticated());
                     request.anyRequest().permitAll();
                 }
         );
