@@ -50,8 +50,8 @@ public class AuthProvider {
         SecurityContextHolder.getContext().setAuthentication(user);
     }
 
-    public boolean isValidData(String subject, String token)
+    public boolean verifyUser(String subject, String token)
             throws UsernameNotFoundException, JwtException {
-        return subject != null && token != null && jwtUtil.verifyToken(subject, token);
+        return jwtUtil.verifyToken(subject, token);
     }
 }

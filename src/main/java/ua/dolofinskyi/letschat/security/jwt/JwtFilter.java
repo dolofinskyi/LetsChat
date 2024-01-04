@@ -36,7 +36,7 @@ public class JwtFilter extends OncePerRequestFilter {
             String subject = cookieService.getCookieValue(request, "Subject");
             String token = cookieService.getCookieValue(request, "Token");
 
-            if (!authProvider.isValidData(subject, token)) {
+            if (!authProvider.verifyUser(subject, token)) {
                 filterService.redirect(request, response, filterChain, "/auth/login");
                 return;
             }
