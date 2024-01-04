@@ -1,6 +1,7 @@
 package ua.dolofinskyi.letschat.security.cookie;
 
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,12 +21,12 @@ public class CookieService {
         response.addCookie(cookie);
     }
 
-    public String getCookie(Cookie[] cookies, String name) {
-        for (Cookie cookie: cookies) {
+    public String getCookieValue(HttpServletRequest request, String name) {
+        for (Cookie cookie: request.getCookies()) {
             if (cookie.getName().equals(name)) {
                 return cookie.getValue();
             }
         }
-        return null;
+        throw new NullPointerException();
     }
 }

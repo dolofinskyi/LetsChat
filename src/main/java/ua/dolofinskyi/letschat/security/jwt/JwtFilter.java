@@ -1,10 +1,12 @@
 package ua.dolofinskyi.letschat.security.jwt;
 
+import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.filter.OncePerRequestFilter;
 import ua.dolofinskyi.letschat.security.authetication.AuthProvider;
 import ua.dolofinskyi.letschat.security.cookie.CookieService;
@@ -20,20 +22,31 @@ public class JwtFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
+        if (!filterService.isUriSecured(request.getRequestURI())) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         if (request.getCookies() == null) {
             filterService.redirect(request, response, filterChain, "/auth/login");
             return;
         }
-        String subject = cookieService.getCookie(request.getCookies(), "Subject");
-        String token = cookieService.getCookie(request.getCookies(), "Token");
 
-        if (filterService.isUriSecured(request.getRequestURI()) &&
-                !authProvider.isValidData(subject, token)) {
+        try {
+            String subject = cookieService.getCookieValue(request, "Subject");
+            String token = cookieService.getCookieValue(request, "Token");
+
+            if (!authProvider.isValidData(subject, token)) {
+                filterService.redirect(request, response, filterChain, "/auth/login");
+                return;
+            }
+
+            authProvider.authenticateUser(request, response, subject);
+        } catch (UsernameNotFoundException | JwtException e) {
             filterService.redirect(request, response, filterChain, "/auth/login");
             return;
         }
 
-        authProvider.authenticateUser(request, response, subject);
         filterChain.doFilter(request, response);
     }
 }
