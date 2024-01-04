@@ -1,11 +1,13 @@
 package ua.dolofinskyi.letschat.security.authetication;
 
 import com.sun.security.auth.UserPrincipal;
+import io.jsonwebtoken.JwtException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Component;
 import ua.dolofinskyi.letschat.features.user.User;
@@ -48,7 +50,8 @@ public class AuthProvider {
         SecurityContextHolder.getContext().setAuthentication(user);
     }
 
-    public boolean isValidData(String subject, String token) {
+    public boolean isValidData(String subject, String token)
+            throws UsernameNotFoundException, JwtException {
         return subject != null && token != null && jwtUtil.verifyToken(subject, token);
     }
 }
