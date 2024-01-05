@@ -63,13 +63,12 @@ public class JwtUtil {
         return null;
     }
 
-    public boolean verifyToken(String subject, String token)
+    public void verifyToken(String subject, String token)
             throws UsernameNotFoundException, JwtException {
         String secret = ((User) userService.loadUserByUsername(subject)).getSecret();
         Jwts.parser()
                 .verifyWith(generateSecretKey(secret))
                 .build()
                 .parseSignedClaims(token);
-        return true;
     }
 }

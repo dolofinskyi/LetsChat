@@ -17,11 +17,13 @@ import ua.dolofinskyi.letschat.security.cookie.CookieService;
 import ua.dolofinskyi.letschat.security.endpoint.EndpointService;
 import ua.dolofinskyi.letschat.security.filter.FilterService;
 import ua.dolofinskyi.letschat.security.jwt.JwtFilter;
+import ua.dolofinskyi.letschat.security.jwt.JwtUtil;
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfiguration {
+    private final JwtUtil jwtUtil;
     private final AuthProvider authProvider;
     private final FilterService filterService;
     private final EndpointService endpointService;
@@ -29,7 +31,7 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.addFilterBefore(new JwtFilter(authProvider, filterService, cookieService),
+        http.addFilterBefore(new JwtFilter(jwtUtil, authProvider, filterService, cookieService),
                 UsernamePasswordAuthenticationFilter.class);
         http.formLogin(AbstractHttpConfigurer::disable);
         http.logout(LogoutConfigurer::permitAll);
