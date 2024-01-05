@@ -8,7 +8,7 @@
     <div class="register-form">
         <legend>Please Register</legend>
         <div th:if="${param.error}" class="alert alert-error">
-            User already exist.
+            User already exist or invalid password.
         </div>
         <label for="username">Username</label>
         <input type="text" id="username" name="username"/>

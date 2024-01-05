@@ -8,7 +8,7 @@
     <div class="login-form">
         <legend>Please Login</legend>
         <div th:if="${param.error}" class="alert alert-error">
-            Invalid username and password.
+            Invalid username and password or user doesn't exist.
         </div>
         <div th:if="${param.logout}" class="alert alert-success">
             You have been logged out.

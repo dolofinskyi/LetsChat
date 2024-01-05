@@ -1,7 +1,6 @@
 package ua.dolofinskyi.letschat.security.authetication;
 
 import com.sun.security.auth.UserPrincipal;
-import io.jsonwebtoken.JwtException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +24,7 @@ public class AuthProvider {
     private final JwtUtil jwtUtil;
 
     public AuthResponse authenticateUser(HttpServletRequest request, HttpServletResponse response,
-                                         String username) {
+                                         String username) throws UsernameNotFoundException {
         return authenticateUser(request, response, (User) userService.loadUserByUsername(username));
     }
 
@@ -48,10 +47,5 @@ public class AuthProvider {
                 new UsernamePasswordAuthenticationToken(principal, null, Collections.emptyList());
         user.setDetails(new WebAuthenticationDetails(request));
         SecurityContextHolder.getContext().setAuthentication(user);
-    }
-
-    public boolean verifyUser(String subject, String token)
-            throws UsernameNotFoundException, JwtException {
-        return jwtUtil.verifyToken(subject, token);
     }
 }
