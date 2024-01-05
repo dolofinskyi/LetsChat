@@ -1,4 +1,4 @@
-package ua.dolofinskyi.letschat.features.service;
+package ua.dolofinskyi.letschat.features.crud;
 
 import java.util.List;
 
