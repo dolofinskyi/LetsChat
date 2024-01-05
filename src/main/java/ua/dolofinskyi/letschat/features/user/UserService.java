@@ -60,6 +60,14 @@ public class UserService implements CrudService<User, String>, UserDetailsServic
                 .build();
     }
 
+    public List<String> findBy(String query) {
+        return listAll()
+                .stream()
+                .map(User::getUsername)
+                .filter(user -> user.startsWith(query))
+                .toList();
+    }
+
     public Optional<User> findByUsername(String username) {
         return listAll()
                 .stream()
