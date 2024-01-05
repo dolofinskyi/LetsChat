@@ -14,4 +14,5 @@ public class Chat {
     @Id
     private String id;
     private Set<String> users;
+    private Set<String> messages;
 }
