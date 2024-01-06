@@ -1,6 +1,5 @@
 package ua.dolofinskyi.letschat.security.action.register;
 
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,7 +20,7 @@ public class RegisterService {
     private final JwtUtil jwtUtil;
     private final AuthProvider authProvider;
 
-    public AuthResponse register(HttpServletRequest request, HttpServletResponse response, RegisterDetails details) {
+    public AuthResponse register(HttpServletResponse response, RegisterDetails details) {
         if (!valid(details)) {
             return AuthResponse.builder().build();
         }
@@ -32,7 +31,7 @@ public class RegisterService {
                         jwtUtil.generateSecret()
                 )
         );
-        return authProvider.authenticate(request, response, user);
+        return authProvider.authenticate(response, user);
     }
 
     public boolean valid(RegisterDetails details) {

@@ -5,23 +5,19 @@ import org.springframework.stereotype.Service;
 import ua.dolofinskyi.letschat.features.user.User;
 import ua.dolofinskyi.letschat.features.user.UserService;
 import ua.dolofinskyi.letschat.features.user.UserStatus;
-import ua.dolofinskyi.letschat.security.context.SecurityContextService;
 
 @Service
 @RequiredArgsConstructor
 public class SocketUserService {
-    private final SecurityContextService contextService;
     private final UserService userService;
 
-
-    public void connect(SocketUser socketUser) {
-        String username = contextService.getPrincipalName();
+    public void connect(String username, String sessionId) {
         User user = (User) userService.loadUserByUsername(username);
+        user.setSessionId(sessionId);
         user.setStatus(UserStatus.ONLINE);
         userService.update(user);
     }
-    public void disconnect(SocketUser socketUser) {
-        String username = contextService.getPrincipalName();
+    public void disconnect(String username) {
         User user = (User) userService.loadUserByUsername(username);
         user.setStatus(UserStatus.OFFLINE);
         userService.update(user);

@@ -1,6 +1,7 @@
-package ua.dolofinskyi.letschat.security.configuration;
+package ua.dolofinskyi.letschat.features.socket;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.converter.DefaultContentTypeResolver;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
@@ -15,7 +16,8 @@ import java.util.List;
 
 @Configuration
 @EnableWebSocketMessageBroker
-public class SocketConfiguration implements WebSocketMessageBrokerConfigurer {
+@RequiredArgsConstructor
+public class SocketMessageBrokerConfiguration implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
@@ -41,4 +43,6 @@ public class SocketConfiguration implements WebSocketMessageBrokerConfigurer {
         messageConverters.add(converter);
         return false;
     }
+
+
 }

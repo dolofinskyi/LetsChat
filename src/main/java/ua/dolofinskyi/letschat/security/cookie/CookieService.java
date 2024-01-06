@@ -13,11 +13,12 @@ public class CookieService {
     @Value("${cookie.expiration}")
     private int expiration;
 
-    public void setCookie(HttpServletResponse response, String name, String value) {
+    public void setCookie(HttpServletResponse response, String name, String value, boolean httpOnly) {
         Cookie cookie = new Cookie(name, value);
         cookie.setPath("/");
         cookie.setMaxAge(expiration);
-        cookie.setHttpOnly(true);
+        cookie.setHttpOnly(httpOnly);
+        cookie.setSecure(true);
         response.addCookie(cookie);
     }
 
