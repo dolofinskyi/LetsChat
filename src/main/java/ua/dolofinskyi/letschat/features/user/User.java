@@ -21,6 +21,7 @@ public class User implements UserDetails {
     private String sessionId;
     private String secret;
     private Set<String> chats;
+    private UserStatus status;
     private boolean accountNonExpired;
     private boolean accountNonLocked;
     private boolean credentialsNonExpired;
