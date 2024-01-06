@@ -37,7 +37,7 @@ public class JwtFilter extends OncePerRequestFilter {
             String subject = cookieService.getCookieValue(request, "Subject");
             String token = cookieService.getCookieValue(request, "Token");
             jwtUtil.verifyToken(subject, token);
-            authProvider.authenticate(request, response, subject);
+            authProvider.authenticate(response, subject);
         } catch (UsernameNotFoundException | JwtException e) {
             filterService.redirect(request, response, filterChain, "/auth/login");
             return;

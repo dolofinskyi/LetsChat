@@ -1,6 +1,5 @@
 package ua.dolofinskyi.letschat.security.action.login;
 
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,12 +15,12 @@ public class LoginService {
     private final PasswordEncoder passwordEncoder;
     private final AuthProvider authProvider;
 
-    public AuthResponse login(HttpServletRequest request, HttpServletResponse response,
+    public AuthResponse login(HttpServletResponse response,
                               LoginDetails details) {
         if (!valid(details)) {
             return AuthResponse.builder().build();
         }
-        return authProvider.authenticate(request, response, details.getUsername());
+        return authProvider.authenticate(response, details.getUsername());
     }
 
     public boolean valid(LoginDetails details) {
