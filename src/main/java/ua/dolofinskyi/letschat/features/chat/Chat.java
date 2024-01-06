@@ -12,7 +12,7 @@ import java.util.Set;
 @Builder
 public class Chat {
     @Id
-    private String id;
-    private Set<String> users;
-    private Set<String> messages;
+    private final String id;
+    private final Set<String> users;
+    private final Set<String> messages;
 }

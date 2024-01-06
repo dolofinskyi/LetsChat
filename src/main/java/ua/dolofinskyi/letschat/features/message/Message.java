@@ -10,7 +10,7 @@ import org.springframework.data.redis.core.RedisHash;
 @Builder
 public class Message {
     @Id
-    private String id;
-    private String sender;
-    private String chat;
+    private final String id;
+    private final String sender;
+    private final String chat;
 }
