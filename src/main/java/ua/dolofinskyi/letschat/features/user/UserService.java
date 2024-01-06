@@ -54,6 +54,7 @@ public class UserService implements CrudService<User, String>, UserDetailsServic
                 .username(username)
                 .password(password)
                 .secret(secret)
+                .status(UserStatus.ONLINE)
                 .enabled(true)
                 .accountNonExpired(true)
                 .accountNonLocked(true)
