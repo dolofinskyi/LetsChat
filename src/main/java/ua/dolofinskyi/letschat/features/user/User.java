@@ -20,7 +20,7 @@ public class User implements UserDetails {
     private String password;
     private String sessionId;
     private String secret;
-    private Set<String> chats;
+    private final Set<String> chats;
     private UserStatus status;
     private boolean accountNonExpired;
     private boolean accountNonLocked;
