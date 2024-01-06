@@ -21,7 +21,7 @@ public class LoginService {
         if (!valid(details)) {
             return AuthResponse.builder().build();
         }
-        return authProvider.authenticateUser(request, response, details.getUsername());
+        return authProvider.authenticate(request, response, details.getUsername());
     }
 
     public boolean valid(LoginDetails details) {

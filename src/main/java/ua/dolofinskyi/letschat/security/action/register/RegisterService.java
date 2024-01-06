@@ -32,7 +32,7 @@ public class RegisterService {
                         jwtUtil.generateSecret()
                 )
         );
-        return authProvider.authenticateUser(request, response, user);
+        return authProvider.authenticate(request, response, user);
     }
 
     public boolean valid(RegisterDetails details) {
