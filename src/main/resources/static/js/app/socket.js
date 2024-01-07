@@ -1,9 +1,8 @@
 const socket = new SockJS('/ws');
 const client = Stomp.over(socket);
 
+const onConnected = () => {
 
-const onConnected = data => {
-    // client.send('/app/user.connect', {}, {});
 };
 
 const onError = () => {
