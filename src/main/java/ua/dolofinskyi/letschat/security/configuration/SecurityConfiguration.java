@@ -31,8 +31,7 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.addFilterBefore(new JwtFilter(jwtUtil, authProvider, filterService, cookieService),
-                UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);
         http.formLogin(AbstractHttpConfigurer::disable);
         http.logout(LogoutConfigurer::permitAll);
         http.csrf(AbstractHttpConfigurer::disable);
@@ -46,7 +45,10 @@ public class SecurityConfiguration {
         return http.build();
     }
 
-
+    @Bean
+    public JwtFilter jwtFilter() {
+        return new JwtFilter(jwtUtil, authProvider, filterService, cookieService);
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
