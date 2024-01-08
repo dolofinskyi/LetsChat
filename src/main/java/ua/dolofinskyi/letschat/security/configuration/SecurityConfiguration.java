@@ -32,7 +32,11 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);
         http.formLogin(AbstractHttpConfigurer::disable);
-        http.logout(form -> form.logoutSuccessUrl("/login").permitAll());
+        http.logout(form -> form.logoutUrl("/auth/logout")
+                .logoutSuccessUrl("/auth/login")
+                .invalidateHttpSession(true)
+                .deleteCookies("Subject", "Token")
+                .permitAll());
         http.csrf(AbstractHttpConfigurer::disable);
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 

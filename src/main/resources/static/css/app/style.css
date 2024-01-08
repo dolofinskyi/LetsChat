@@ -134,6 +134,16 @@ input[name="user"]:not(:checked)::after {
     padding-left: 10px
 }
 
+.chat .chat-header .logout {
+    margin-left: auto;
+    color: var(--description-color);
+    padding: 20px;
+}
+
+.chat .chat-header .logout:hover {
+    color: var(--main-color);
+}
+
 .status {
     color: var(--description-color);
 }
@@ -191,7 +201,7 @@ input[name="user"]:not(:checked)::after {
     color: var(--description-color);
 }
 
-.message-container .message-data .message-user-username:active {
+.message-container .message-data .message-user-username:hover {
     color: var(--main-color);
 }
 
