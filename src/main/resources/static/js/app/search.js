@@ -4,16 +4,10 @@ const searchButton = document.querySelector(".search-button");
 const searchUrl = "/api/user/list";
 
 searchButton.onclick = async () => {
-    clearAllChildrens(chatList);
+    await removeChildrens(chatList);
     let params = new URLSearchParams({'query': inputSearch.value});
     let data = await fetch(searchUrl + "?" + params.toString()).then(resp => resp.json());
     data.forEach(user => createHtmlUser(user));
-}
-
-async function clearAllChildrens(element) {
-    while (element.firstChild) {
-        element.removeChild(element.lastChild);
-    }
 }
 
 async function createHtmlUser(username) {
