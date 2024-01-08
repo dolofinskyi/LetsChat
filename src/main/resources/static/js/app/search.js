@@ -1,7 +1,15 @@
 const chatList = document.querySelector(".chat-list");
+const emptyElement = document.querySelector(".people-list .empty-element");
 const inputSearch = document.querySelector(".input-search");
 const searchButton = document.querySelector(".search-button");
 const searchUrl = "/api/user/list";
+
+inputSearch.oninput = async () => {
+    if (inputSearch.value == '') {
+        await removeChildrens(chatList);
+        // Get all user chats
+    }
+}
 
 searchButton.onclick = async () => {
     await removeChildrens(chatList);

@@ -229,18 +229,6 @@ input[name="user"]:not(:checked)::after {
     margin-left: auto;
 }
 
-.empty-element {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--description-color);
-}
-
-.full-size {
-    width: 100%;
-    height: 100%;
-}
-
 .disabled {
     display: none;
 }
