@@ -12,34 +12,32 @@ import java.util.*;
 @Service
 @RequiredArgsConstructor
 public class UserService implements CrudService<User, String>, UserDetailsService {
-    private final UserRepository repository;
+    private final UserRepository userRepository;
 
     @Override
     public User add(User user) {
-        return repository.save(user);
+        return userRepository.save(user);
     }
 
     @Override
     public User get(String id) {
-        return repository
-                .findById(id)
-                .orElseThrow(NullPointerException::new);
+        return userRepository.findById(id).orElseThrow();
     }
 
     @Override
     public User update(User entity) {
-        return repository.save(entity);
+        return userRepository.save(entity);
     }
 
     @Override
     public void delete(User entity) {
-        repository.delete(entity);
+        userRepository.delete(entity);
     }
 
     @Override
     public List<User> listAll() {
         List<User> list = new ArrayList<>();
-        Iterator<User> iterator = repository.findAll().iterator();
+        Iterator<User> iterator = userRepository.findAll().iterator();
         iterator.forEachRemaining(list::add);
         return list;
     }
