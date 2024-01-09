@@ -31,7 +31,10 @@ public class RegisterService {
                         jwtUtil.generateSecret()
                 )
         );
-        return authProvider.authenticate(response, user);
+        String token = jwtUtil.generateToken(user);
+        authProvider.authenticate(user);
+        jwtUtil.setJwtCookies(response, user.getUsername(), token);
+        return AuthResponse.builder().token(token).build();
     }
 
     public boolean valid(RegisterDetails details) {

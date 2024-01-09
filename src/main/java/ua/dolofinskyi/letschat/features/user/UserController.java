@@ -15,7 +15,7 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/list")
-    public List<String> list(@RequestParam String query) {
-        return userService.findBy(query);
+    public List<String> list(@RequestParam String prefix) {
+        return userService.findUsernamesByPrefix(prefix);
     }
 }

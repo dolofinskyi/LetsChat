@@ -2,6 +2,7 @@ package ua.dolofinskyi.letschat.security.jwt;
 
 import io.jsonwebtoken.*;
 import jakarta.annotation.PostConstruct;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,6 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import ua.dolofinskyi.letschat.features.user.User;
 import ua.dolofinskyi.letschat.features.user.UserService;
+import ua.dolofinskyi.letschat.security.cookie.CookieService;
 
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
@@ -26,8 +28,10 @@ public class JwtUtil {
     @Getter
     @Value("${jwt.algorithm}")
     private String algorithm;
-    private final UserService userService;
     private String SIGNATURE_JCA_NAME;
+
+    private final UserService userService;
+    private final CookieService cookieService;
 
     @PostConstruct
     private void init() {
@@ -70,5 +74,10 @@ public class JwtUtil {
                 .verifyWith(generateSecretKey(secret))
                 .build()
                 .parseSignedClaims(token);
+    }
+
+    public void setJwtCookies(HttpServletResponse response, String subject, String token) {
+        cookieService.setCookie(response, "Subject", subject);
+        cookieService.setCookie(response, "Token", token);
     }
 }

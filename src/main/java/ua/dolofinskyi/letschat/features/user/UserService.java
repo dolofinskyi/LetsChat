@@ -44,9 +44,9 @@ public class UserService implements CrudService<User, String>, UserDetailsServic
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException(username));
+        return findByUsername(username);
     }
+
     public User createUser(String username, String password, String secret) {
         return User.builder()
                 .username(username)
@@ -59,22 +59,27 @@ public class UserService implements CrudService<User, String>, UserDetailsServic
                 .build();
     }
 
-    public List<String> findBy(String query) {
+    public List<String> findUsernamesByPrefix(String prefix) {
         return listAll()
                 .stream()
                 .map(User::getUsername)
-                .filter(user -> user.startsWith(query))
+                .filter(user -> user.startsWith(prefix))
                 .toList();
     }
 
-    public Optional<User> findByUsername(String username) {
+    public Optional<User> findOptionalByUsername(String username) throws UsernameNotFoundException {
         return listAll()
                 .stream()
                 .filter(user -> Objects.equals(user.getUsername(), username))
                 .findFirst();
     }
 
+    public User findByUsername(String username) throws UsernameNotFoundException {
+        return findOptionalByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException(username));
+    }
+
     public boolean isUserExist(String username) {
-        return findByUsername(username).isPresent();
+        return findOptionalByUsername(username).isPresent();
     }
 }

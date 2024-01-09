@@ -13,7 +13,7 @@ inputSearch.oninput = async () => {
 
 searchButton.onclick = async () => {
     await removeChildrens(chatList);
-    let params = new URLSearchParams({'query': inputSearch.value});
+    let params = new URLSearchParams({'prefix': inputSearch.value});
     let data = await fetch(searchUrl + "?" + params.toString()).then(resp => resp.json());
     data.forEach(user => createHtmlUser(user));
 }
