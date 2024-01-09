@@ -35,8 +35,8 @@ public class AuthProvider {
     }
 
     public void setAuthenticationCookies(HttpServletResponse response, String subject, String token) {
-        cookieService.setCookie(response, "Subject", subject, true);
-        cookieService.setCookie(response, "Token", token, true);
+        cookieService.setCookie(response, "Subject", subject);
+        cookieService.setCookie(response, "Token", token);
     }
 
     public Authentication getAuthentication(String subject) {
