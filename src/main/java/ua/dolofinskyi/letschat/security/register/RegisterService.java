@@ -1,4 +1,4 @@
-package ua.dolofinskyi.letschat.security.action.register;
+package ua.dolofinskyi.letschat.security.register;
 
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
