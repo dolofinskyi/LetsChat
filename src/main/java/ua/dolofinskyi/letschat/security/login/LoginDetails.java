@@ -1,11 +1,10 @@
-package ua.dolofinskyi.letschat.security.action.register;
+package ua.dolofinskyi.letschat.security.login;
 
 import lombok.Data;
 import ua.dolofinskyi.letschat.security.authetication.AuthDetails;
 
 @Data
-public class RegisterDetails implements AuthDetails {
+public class LoginDetails implements AuthDetails {
     private String username;
     private String password;
-    private String repeatPassword;
 }

@@ -4,10 +4,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import ua.dolofinskyi.letschat.security.action.login.LoginDetails;
-import ua.dolofinskyi.letschat.security.action.login.LoginService;
-import ua.dolofinskyi.letschat.security.action.register.RegisterDetails;
-import ua.dolofinskyi.letschat.security.action.register.RegisterService;
+import ua.dolofinskyi.letschat.security.login.LoginDetails;
+import ua.dolofinskyi.letschat.security.login.LoginService;
+import ua.dolofinskyi.letschat.security.register.RegisterDetails;
+import ua.dolofinskyi.letschat.security.register.RegisterService;
 
 @Controller
 @RequestMapping("/auth")

@@ -1,4 +1,4 @@
-package ua.dolofinskyi.letschat.security.action.login;
+package ua.dolofinskyi.letschat.security.login;
 
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
