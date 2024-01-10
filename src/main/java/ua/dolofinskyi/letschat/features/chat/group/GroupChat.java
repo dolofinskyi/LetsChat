@@ -1,19 +1,20 @@
-package ua.dolofinskyi.letschat.features.chat.type;
+package ua.dolofinskyi.letschat.features.chat.group;
 
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 import ua.dolofinskyi.letschat.features.chat.Chat;
+import ua.dolofinskyi.letschat.features.chat.ChatType;
 
 import java.util.Set;
 
 @Data
 @RedisHash
 @Builder
-public class PrivateChat implements Chat {
+public class GroupChat implements Chat {
     @Id
-    private final String id;
+    private final String name;
     private final Set<String> users;
     private final Set<String> messages;
 
@@ -21,17 +22,17 @@ public class PrivateChat implements Chat {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        PrivateChat chat = (PrivateChat) o;
-        return id.equals(chat.id);
+        GroupChat chat = (GroupChat) o;
+        return name.equals(chat.name);
     }
 
     @Override
     public int hashCode() {
-        return id.hashCode();
+        return name.hashCode();
     }
 
     @Override
-    public boolean isPrivate() {
-        return true;
+    public ChatType getType() {
+        return ChatType.GROUP;
     }
 }
