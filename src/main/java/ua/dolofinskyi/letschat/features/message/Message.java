@@ -12,5 +12,5 @@ public class Message {
     @Id
     private final String id;
     private final String sender;
-    private final String chat;
+    private final String receiver;
 }
