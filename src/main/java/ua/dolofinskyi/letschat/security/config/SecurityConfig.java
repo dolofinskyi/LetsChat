@@ -1,4 +1,4 @@
-package ua.dolofinskyi.letschat.security.configuration;
+package ua.dolofinskyi.letschat.security.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -21,7 +21,7 @@ import ua.dolofinskyi.letschat.security.jwt.JwtUtil;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-public class SecurityConfiguration {
+public class SecurityConfig {
     private final JwtUtil jwtUtil;
     private final AuthProvider authProvider;
     private final FilterService filterService;

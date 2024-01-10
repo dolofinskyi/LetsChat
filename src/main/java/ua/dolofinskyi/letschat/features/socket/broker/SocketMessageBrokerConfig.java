@@ -1,4 +1,4 @@
-package ua.dolofinskyi.letschat.features.socket;
+package ua.dolofinskyi.letschat.features.socket.broker;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +15,7 @@ import java.util.List;
 @Configuration
 @EnableWebSocketMessageBroker
 @RequiredArgsConstructor
-public class SocketMessageBrokerConfiguration implements WebSocketMessageBrokerConfigurer {
+public class SocketMessageBrokerConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
