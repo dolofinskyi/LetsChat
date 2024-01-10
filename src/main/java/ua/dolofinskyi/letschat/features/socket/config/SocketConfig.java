@@ -1,14 +1,16 @@
-package ua.dolofinskyi.letschat.features.socket;
+package ua.dolofinskyi.letschat.features.socket.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.config.annotation.*;
+import ua.dolofinskyi.letschat.features.socket.connection.SocketConnectionHandler;
+import ua.dolofinskyi.letschat.features.socket.user.SocketUserService;
 
 @Configuration
 @EnableWebSocket
 @RequiredArgsConstructor
-public class SocketConfiguration implements WebSocketConfigurer {
+public class SocketConfig implements WebSocketConfigurer {
     private final SocketUserService socketUserService;
 
     @Override

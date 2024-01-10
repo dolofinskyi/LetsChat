@@ -1,4 +1,4 @@
-package ua.dolofinskyi.letschat.features.socket;
+package ua.dolofinskyi.letschat.features.socket.connection;
 
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -7,12 +7,13 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.AbstractWebSocketHandler;
+import ua.dolofinskyi.letschat.features.socket.user.SocketUserService;
 
 import java.security.Principal;
 
 @RequiredArgsConstructor
 public class SocketConnectionHandler extends AbstractWebSocketHandler {
-    private Logger logger = LoggerFactory.getLogger(SocketUserController.class);
+    private Logger logger = LoggerFactory.getLogger(SocketConnectionHandler.class);
     private final SocketUserService socketUserService;
 
     @Override
