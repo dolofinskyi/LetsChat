@@ -1,4 +1,4 @@
-package ua.dolofinskyi.letschat.features.socket.broker;
+package ua.dolofinskyi.letschat.features.socket;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package ua.dolofinskyi.letschat.features.socket.connection;
+package ua.dolofinskyi.letschat.features.socket;
 
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
