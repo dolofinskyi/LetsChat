@@ -69,7 +69,7 @@ public class JwtUtil {
 
     public void verifyToken(String subject, String token)
             throws UsernameNotFoundException, JwtException {
-        String secret = ((User) userService.loadUserByUsername(subject)).getSecret();
+        String secret = userService.findByUsername(subject).getSecret();
         Jwts.parser()
                 .verifyWith(generateSecretKey(secret))
                 .build()
