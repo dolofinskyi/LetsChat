@@ -1,8 +1,8 @@
-# Lets Chat
+# Let's Chat
 ## Classic messenger 
 
 ### Description
-LetsChat is GitHub project which implements a lightweight massenger with simplified functionality. 
+LetsChat is GitHub project which implements a lightweight messenger with simplified functionality. 
 
 ### Features
   - Real-time messaging using **WebSocket**
