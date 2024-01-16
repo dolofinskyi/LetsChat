@@ -32,7 +32,7 @@ public class RegisterService {
                 )
         );
         String token = jwtUtil.generateToken(user);
-        authProvider.authenticate(user);
+        authProvider.authenticate(user.getUsername());
         jwtUtil.setJwtCookies(response, user.getUsername(), token);
         return AuthResponse.builder().token(token).build();
     }
