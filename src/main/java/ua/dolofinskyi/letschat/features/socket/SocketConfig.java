@@ -1,10 +1,9 @@
-package ua.dolofinskyi.letschat.features.socket.config;
+package ua.dolofinskyi.letschat.features.socket;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.config.annotation.*;
-import ua.dolofinskyi.letschat.features.socket.connection.SocketConnectionHandler;
 import ua.dolofinskyi.letschat.features.socket.user.SocketUserService;
 
 @Configuration

@@ -1,11 +1,9 @@
-package ua.dolofinskyi.letschat.features.chat.personal;
+package ua.dolofinskyi.letschat.features.chat;
 
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
-import ua.dolofinskyi.letschat.features.chat.Chat;
-import ua.dolofinskyi.letschat.features.chat.ChatType;
 
 import java.util.Set;
 

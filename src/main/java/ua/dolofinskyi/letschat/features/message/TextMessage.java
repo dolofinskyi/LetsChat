@@ -1,4 +1,4 @@
-package ua.dolofinskyi.letschat.features.message.text;
+package ua.dolofinskyi.letschat.features.message;
 
 import lombok.Builder;
 import lombok.Data;
