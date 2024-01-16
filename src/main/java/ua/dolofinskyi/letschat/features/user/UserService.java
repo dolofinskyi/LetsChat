@@ -67,19 +67,12 @@ public class UserService implements CrudService<User, String>, UserDetailsServic
                 .toList();
     }
 
-    public Optional<User> findOptionalByUsername(String username) throws UsernameNotFoundException {
-        return listAll()
-                .stream()
-                .filter(user -> Objects.equals(user.getUsername(), username))
-                .findFirst();
-    }
-
     public User findByUsername(String username) throws UsernameNotFoundException {
-        return findOptionalByUsername(username)
+        return userRepository.findById(username)
                 .orElseThrow(() -> new UsernameNotFoundException(username));
     }
 
     public boolean isUserExist(String username) {
-        return findOptionalByUsername(username).isPresent();
+        return userRepository.findById(username).isPresent();
     }
 }
