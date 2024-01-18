@@ -2,7 +2,7 @@ const chatList = document.querySelector(".chat-list");
 const emptyElement = document.querySelector(".people-list .empty-element");
 const inputSearch = document.querySelector(".input-search");
 const searchButton = document.querySelector(".search-button");
-const searchUrl = "/api/user/list";
+const searchUrl = "/api/v1/user/search";
 
 inputSearch.oninput = async () => {
     if (inputSearch.value == '') {
