@@ -12,7 +12,7 @@ import ua.dolofinskyi.letschat.security.register.RegisterService;
 @Controller
 @RequestMapping("/auth")
 @RequiredArgsConstructor
-public class AuthController {
+public class AuthenticationController {
     private final RegisterService registerService;
     private final LoginService loginService;
 
@@ -23,7 +23,7 @@ public class AuthController {
 
     @PostMapping("/login")
     @ResponseBody
-    public AuthResponse postLogin(HttpServletResponse response, @RequestBody LoginDetails details) {
+    public AuthenticationResponse postLogin(HttpServletResponse response, @RequestBody LoginDetails details) {
         return loginService.login(response, details);
     }
 
@@ -34,7 +34,7 @@ public class AuthController {
 
     @PostMapping("/register")
     @ResponseBody
-    public AuthResponse postRegister(HttpServletResponse response, @RequestBody RegisterDetails details) {
+    public AuthenticationResponse postRegister(HttpServletResponse response, @RequestBody RegisterDetails details) {
         return registerService.register(response, details);
     }
 }

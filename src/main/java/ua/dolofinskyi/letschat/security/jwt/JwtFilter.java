@@ -8,7 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.filter.OncePerRequestFilter;
-import ua.dolofinskyi.letschat.security.authetication.AuthProvider;
+import ua.dolofinskyi.letschat.security.authetication.AuthenticationService;
 import ua.dolofinskyi.letschat.security.cookie.CookieService;
 import ua.dolofinskyi.letschat.security.filter.FilterService;
 
@@ -17,7 +17,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
     private final JwtUtil jwtUtil;
-    private final AuthProvider authProvider;
+    private final AuthenticationService authenticationService;
     private final FilterService filterService;
     private final CookieService cookieService;
     @Override
@@ -37,7 +37,7 @@ public class JwtFilter extends OncePerRequestFilter {
             String subject = cookieService.getCookieValue(request, "Subject");
             String token = cookieService.getCookieValue(request, "Token");
             jwtUtil.verifyToken(subject, token);
-            authProvider.authenticate(subject);
+            authenticationService.authenticate(subject);
         } catch (UsernameNotFoundException | JwtException e) {
             filterService.redirect(request, response, filterChain, "/auth/login");
             return;

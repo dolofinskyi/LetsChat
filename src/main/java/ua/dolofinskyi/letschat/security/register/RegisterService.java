@@ -6,8 +6,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ua.dolofinskyi.letschat.features.user.User;
 import ua.dolofinskyi.letschat.features.user.UserService;
-import ua.dolofinskyi.letschat.security.authetication.AuthProvider;
-import ua.dolofinskyi.letschat.security.authetication.AuthResponse;
+import ua.dolofinskyi.letschat.security.authetication.AuthenticationService;
+import ua.dolofinskyi.letschat.security.authetication.AuthenticationResponse;
 import ua.dolofinskyi.letschat.security.jwt.JwtUtil;
 
 import java.util.Objects;
@@ -18,11 +18,11 @@ public class RegisterService {
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
-    private final AuthProvider authProvider;
+    private final AuthenticationService authenticationService;
 
-    public AuthResponse register(HttpServletResponse response, RegisterDetails details) {
+    public AuthenticationResponse register(HttpServletResponse response, RegisterDetails details) {
         if (!valid(details)) {
-            return AuthResponse.builder().build();
+            return AuthenticationResponse.builder().build();
         }
         User user = userService.add(
                 userService.createUser(
@@ -32,9 +32,9 @@ public class RegisterService {
                 )
         );
         String token = jwtUtil.generateToken(user);
-        authProvider.authenticate(user.getUsername());
+        authenticationService.authenticate(user.getUsername());
         jwtUtil.setJwtCookies(response, user.getUsername(), token);
-        return AuthResponse.builder().token(token).build();
+        return AuthenticationResponse.builder().token(token).build();
     }
 
     public boolean valid(RegisterDetails details) {
