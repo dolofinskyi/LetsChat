@@ -12,10 +12,16 @@ import java.util.List;
 @RequestMapping("/api/v1/user")
 @RequiredArgsConstructor
 public class UserController {
+    private final UserMapper userMapper;
     private final UserService userService;
 
     @GetMapping("/list")
-    public List<String> list(@RequestParam String prefix) {
+    public List<UserDto> list() {
+        return userMapper.toDtos(userService.listAll());
+    }
+
+    @GetMapping("/search")
+    public List<String> search(@RequestParam String prefix) {
         return userService.findUsernamesByPrefix(prefix);
     }
 }
