@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import ua.dolofinskyi.letschat.features.user.User;
 import ua.dolofinskyi.letschat.features.user.UserService;
 import ua.dolofinskyi.letschat.security.cookie.CookieService;
@@ -19,9 +19,9 @@ import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 
-@Component
+@Service
 @RequiredArgsConstructor
-public class JwtUtil {
+public class JwtService {
     @Getter
     @Value("${jwt.expiration}")
     private long expiration;
