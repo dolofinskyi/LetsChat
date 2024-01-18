@@ -18,7 +18,7 @@ searchButton.onclick = async () => {
     data.forEach(user => createHtmlUser(user));
 }
 
-async function createHtmlUser(username) {
+async function createHtmlUser(user) {
     const container = document.createElement('li');
     const label = document.createElement('label');
     const avatar = document.createElement('div');
@@ -36,9 +36,9 @@ async function createHtmlUser(username) {
     radio.setAttribute("type", "radio");
     radio.setAttribute("name", "user");
 
-    avatar.innerHTML = username[0].toUpperCase();
-    name.innerHTML = username;
-    status.innerHTML = 'Offline';
+    avatar.innerHTML = user.username[0].toUpperCase();
+    name.innerHTML = user.username;
+    status.innerHTML = user.status;
 
     chatList.appendChild(container);
     container.appendChild(label);
