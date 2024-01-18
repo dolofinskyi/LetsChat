@@ -8,13 +8,13 @@ import ua.dolofinskyi.letschat.features.user.User;
 import ua.dolofinskyi.letschat.features.user.UserService;
 import ua.dolofinskyi.letschat.security.authetication.AuthenticationService;
 import ua.dolofinskyi.letschat.security.authetication.AuthenticationResponse;
-import ua.dolofinskyi.letschat.security.jwt.JwtUtil;
+import ua.dolofinskyi.letschat.security.jwt.JwtService;
 
 @Service
 @RequiredArgsConstructor
 public class LoginService {
     private final UserService userService;
-    private final JwtUtil jwtUtil;
+    private final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationService authenticationService;
 
@@ -23,9 +23,9 @@ public class LoginService {
             return AuthenticationResponse.builder().build();
         }
         User user = userService.findByUsername(details.getUsername());
-        String token = jwtUtil.generateToken(user);
+        String token = jwtService.generateToken(user);
         authenticationService.authenticate(user.getUsername());
-        jwtUtil.setJwtCookies(response, user.getUsername(), token);
+        jwtService.setJwtCookies(response, user.getUsername(), token);
         return AuthenticationResponse.builder().token(token).build();
     }
 

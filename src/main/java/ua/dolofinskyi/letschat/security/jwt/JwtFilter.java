@@ -16,7 +16,7 @@ import java.io.IOException;
 
 @RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
-    private final JwtUtil jwtUtil;
+    private final JwtService jwtService;
     private final AuthenticationService authenticationService;
     private final FilterService filterService;
     private final CookieService cookieService;
@@ -36,7 +36,7 @@ public class JwtFilter extends OncePerRequestFilter {
         try {
             String subject = cookieService.getCookieValue(request, "Subject");
             String token = cookieService.getCookieValue(request, "Token");
-            jwtUtil.verifyToken(subject, token);
+            jwtService.verifyToken(subject, token);
             authenticationService.authenticate(subject);
         } catch (UsernameNotFoundException | JwtException e) {
             filterService.redirect(request, response, filterChain, "/auth/login");

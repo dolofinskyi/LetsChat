@@ -16,13 +16,13 @@ import ua.dolofinskyi.letschat.security.cookie.CookieService;
 import ua.dolofinskyi.letschat.security.endpoint.EndpointService;
 import ua.dolofinskyi.letschat.security.filter.FilterService;
 import ua.dolofinskyi.letschat.security.jwt.JwtFilter;
-import ua.dolofinskyi.letschat.security.jwt.JwtUtil;
+import ua.dolofinskyi.letschat.security.jwt.JwtService;
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
-    private final JwtUtil jwtUtil;
+    private final JwtService jwtService;
     private final AuthenticationService authenticationService;
     private final FilterService filterService;
     private final EndpointService endpointService;
@@ -52,7 +52,7 @@ public class SecurityConfig {
     @Bean
     public JwtFilter jwtFilter() {
         return new JwtFilter(
-                jwtUtil,
+                jwtService,
                 authenticationService,
                 filterService,
                 cookieService
