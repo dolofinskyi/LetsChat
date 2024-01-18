@@ -11,7 +11,7 @@ import java.util.Collections;
 
 @Component
 @RequiredArgsConstructor
-public class AuthProvider {
+public class AuthenticationService {
     private final SecurityContextService securityContextService;
 
     public void authenticate(String username) {

@@ -11,7 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import ua.dolofinskyi.letschat.security.authetication.AuthProvider;
+import ua.dolofinskyi.letschat.security.authetication.AuthenticationService;
 import ua.dolofinskyi.letschat.security.cookie.CookieService;
 import ua.dolofinskyi.letschat.security.endpoint.EndpointService;
 import ua.dolofinskyi.letschat.security.filter.FilterService;
@@ -23,7 +23,7 @@ import ua.dolofinskyi.letschat.security.jwt.JwtUtil;
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final JwtUtil jwtUtil;
-    private final AuthProvider authProvider;
+    private final AuthenticationService authenticationService;
     private final FilterService filterService;
     private final EndpointService endpointService;
     private final CookieService cookieService;
@@ -51,7 +51,7 @@ public class SecurityConfig {
 
     @Bean
     public JwtFilter jwtFilter() {
-        return new JwtFilter(jwtUtil, authProvider, filterService, cookieService);
+        return new JwtFilter(jwtUtil, authenticationService, filterService, cookieService);
     }
 
     @Bean
