@@ -21,7 +21,7 @@ public class UserController {
     }
 
     @GetMapping("/search")
-    public List<String> search(@RequestParam String prefix) {
-        return userService.findUsernamesByPrefix(prefix);
+    public List<UserDto> search(@RequestParam String prefix) {
+        return userMapper.toDtos(userService.findUsersByPrefix(prefix));
     }
 }

@@ -59,11 +59,10 @@ public class UserService implements CrudService<User, String>, UserDetailsServic
                 .build();
     }
 
-    public List<String> findUsernamesByPrefix(String prefix) {
+    public List<User> findUsersByPrefix(String prefix) {
         return listAll()
                 .stream()
-                .map(User::getUsername)
-                .filter(user -> user.startsWith(prefix))
+                .filter(user -> user.getUsername().startsWith(prefix))
                 .toList();
     }
 
