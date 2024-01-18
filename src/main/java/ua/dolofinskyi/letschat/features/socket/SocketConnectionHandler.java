@@ -43,6 +43,7 @@ public class SocketConnectionHandler extends AbstractWebSocketHandler {
         try {
             socketUserService.disconnect(principal.getName());
             logger.info(String.format("Disconnected! username: %s sessionId: %s", principal.getName(), session.getId()));
+            session.close();
         } catch (UsernameNotFoundException e) {
             session.close();
         }
