@@ -59,7 +59,7 @@ public class UserService implements CrudService<User, String> {
                 .toList();
     }
 
-    public User findByUsername(String username) throws UsernameNotFoundException {
+    public User findByUsername(String username) {
         return userRepository.findById(username)
                 .orElseThrow(() -> new UsernameNotFoundException(username));
     }
