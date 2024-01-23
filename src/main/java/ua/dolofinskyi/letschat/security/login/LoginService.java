@@ -34,7 +34,7 @@ public class LoginService {
             //TODO throw UserNotFoundException
             return false;
         }
-        String encodedPassword = userService.loadUserByUsername(details.getUsername()).getPassword();
+        String encodedPassword = userService.findByUsername(details.getUsername()).getPassword();
         //TODO throw InvalidPasswordException
         return passwordEncoder.matches(details.getPassword(), encodedPassword);
     }
