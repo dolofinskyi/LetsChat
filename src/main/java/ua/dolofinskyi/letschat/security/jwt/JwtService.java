@@ -6,7 +6,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import ua.dolofinskyi.letschat.features.user.User;
 import ua.dolofinskyi.letschat.features.user.UserService;
@@ -67,8 +66,7 @@ public class JwtService {
         return null;
     }
 
-    public void verifyToken(String subject, String token)
-            throws UsernameNotFoundException, JwtException {
+    public void verifyToken(String subject, String token) {
         String secret = userService.findByUsername(subject).getSecret();
         Jwts.parser()
                 .verifyWith(generateSecretKey(secret))

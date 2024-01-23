@@ -33,9 +33,15 @@ public class JwtFilter extends OncePerRequestFilter {
             return;
         }
 
+        String subject = cookieService.getCookieValue(request, "Subject");
+        String token = cookieService.getCookieValue(request, "Token");
+
+        if (subject == null || token == null) {
+            filterService.redirect(request, response, filterChain, "/auth/login");
+            return;
+        }
+
         try {
-            String subject = cookieService.getCookieValue(request, "Subject");
-            String token = cookieService.getCookieValue(request, "Token");
             jwtService.verifyToken(subject, token);
             authenticationService.authenticate(subject);
         } catch (UsernameNotFoundException | JwtException e) {
