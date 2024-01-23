@@ -75,7 +75,7 @@ public class JwtService {
     }
 
     public void setJwtCookies(HttpServletResponse response, String subject, String token) {
-        cookieService.setCookie(response, "Subject", subject);
-        cookieService.setCookie(response, "Token", token);
+        response.addCookie(cookieService.createDefaultCookie("Subject", subject));
+        response.addCookie(cookieService.createDefaultCookie("Token", token));
     }
 }
