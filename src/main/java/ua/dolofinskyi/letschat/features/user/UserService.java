@@ -1,8 +1,6 @@
 package ua.dolofinskyi.letschat.features.user;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import ua.dolofinskyi.letschat.features.crud.CrudService;
@@ -11,7 +9,7 @@ import java.util.*;
 
 @Service
 @RequiredArgsConstructor
-public class UserService implements CrudService<User, String>, UserDetailsService {
+public class UserService implements CrudService<User, String> {
     private final UserRepository userRepository;
 
     @Override
@@ -40,11 +38,6 @@ public class UserService implements CrudService<User, String>, UserDetailsServic
         Iterator<User> iterator = userRepository.findAll().iterator();
         iterator.forEachRemaining(list::add);
         return list;
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return findByUsername(username);
     }
 
     public User createUser(String username, String password, String secret) {
