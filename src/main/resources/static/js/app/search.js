@@ -36,6 +36,10 @@ async function createHtmlUser(user) {
     radio.setAttribute("type", "radio");
     radio.setAttribute("name", "user");
 
+    radio.onclick = () => {
+        selectedUser = user.username;
+    };
+
     avatar.innerHTML = user.username[0].toUpperCase();
     name.innerHTML = user.username;
     status.innerHTML = user.status;
