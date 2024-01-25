@@ -136,13 +136,18 @@ input[name="user"]:not(:checked)::after {
     flex-direction: row;
 }
 
-.chat .chat-header .logout {
+.link {
     color: var(--description-color);
     padding: 20px;
 }
 
-.chat .chat-header .logout:hover {
+.link:hover {
     color: var(--main-color);
+}
+
+.header-buttons {
+    display: flex;
+    flex-direction: row;
 }
 
 .status {

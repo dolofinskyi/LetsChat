@@ -47,7 +47,10 @@
                             <small class="status">Online</small>
                         </div>
                     </div>
-                    <a href="/auth/logout" class="logout float-right">logout</a>
+                    <div class="header-buttons float-right">
+                        <a class="link profile" href="#" th:text="${'Hello, ' + username + '!'}"></a>
+                        <a class="link logout" href="/auth/logout">logout</a>
+                    </div>
                 </div>
                 <div class="chat-history">
                     <ul>
@@ -86,6 +89,10 @@
             </div>
     </div>
     </div>
+    <script th:inline="javascript">
+        const user = [[${username}]];
+    </script>
+
     <script th:src="@{/js/app/app.js}"></script>
     <script th:src="@{/js/app/utils.js}"></script>
     <script th:src="@{/js/app/socket.js}"></script>
