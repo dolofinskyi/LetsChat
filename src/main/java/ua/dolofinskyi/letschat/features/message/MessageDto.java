@@ -8,5 +8,5 @@ import lombok.Data;
 public class MessageDto {
     private final String sender;
     private final String receiver;
-    private final Object content;
+    private final String content;
 }

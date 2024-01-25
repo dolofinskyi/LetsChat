@@ -13,6 +13,5 @@ public class Message {
     private final String id;
     private final String sender;
     private final String receiver;
-    private final Object content;
-    private final MessageType type;
+    private final String content;
 }
