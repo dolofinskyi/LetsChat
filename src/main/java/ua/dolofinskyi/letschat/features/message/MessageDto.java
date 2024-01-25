@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 @Builder
 public class MessageDto {
-    private final String sender;
-    private final String receiver;
+    private final String from;
+    private final String to;
     private final String content;
 }

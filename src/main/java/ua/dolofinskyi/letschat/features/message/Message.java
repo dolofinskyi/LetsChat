@@ -11,7 +11,7 @@ import org.springframework.data.redis.core.RedisHash;
 public class Message {
     @Id
     private final String id;
-    private final String sender;
-    private final String receiver;
+    private final String from;
+    private final String to;
     private final String content;
 }
