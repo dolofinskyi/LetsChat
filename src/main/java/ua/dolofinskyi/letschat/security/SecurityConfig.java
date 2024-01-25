@@ -1,9 +1,8 @@
-package ua.dolofinskyi.letschat.security.config;
+package ua.dolofinskyi.letschat.security;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -11,6 +10,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import ua.dolofinskyi.letschat.security.authetication.AuthenticationService;
+import ua.dolofinskyi.letschat.security.authetication.CustomAuthenticationProvider;
 import ua.dolofinskyi.letschat.security.cookie.CookieService;
 import ua.dolofinskyi.letschat.security.endpoint.EndpointService;
 import ua.dolofinskyi.letschat.security.filter.FilterService;
@@ -26,7 +26,7 @@ public class SecurityConfig {
     private final FilterService filterService;
     private final EndpointService endpointService;
     private final CookieService cookieService;
-    private final AuthenticationProvider authenticationProvider;
+    private final CustomAuthenticationProvider authenticationProvider;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
