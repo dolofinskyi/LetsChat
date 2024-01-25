@@ -11,8 +11,8 @@ public class MessageMapper implements Mapper<Message, MessageDto> {
     @Override
     public Message toEntity(MessageDto dto) {
         return Message.builder()
-                .sender(dto.getSender())
-                .receiver(dto.getReceiver())
+                .from(dto.getFrom())
+                .to(dto.getTo())
                 .content(dto.getContent())
                 .build();
     }
@@ -20,8 +20,8 @@ public class MessageMapper implements Mapper<Message, MessageDto> {
     @Override
     public MessageDto toDto(Message entity) {
         return MessageDto.builder()
-                .sender(entity.getSender())
-                .receiver(entity.getReceiver())
+                .from(entity.getFrom())
+                .to(entity.getTo())
                 .content(entity.getContent())
                 .build();
     }
