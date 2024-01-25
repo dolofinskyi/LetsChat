@@ -1,19 +1,19 @@
 package ua.dolofinskyi.letschat.features.message;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;;
 
-import java.util.Collections;
-import java.util.List;
-
-@RestController
+@Controller
 @RequestMapping("/api/v1/message")
 @RequiredArgsConstructor
 public class MessageController {
     private final MessageService messageService;
+    private final MessageMapper messageMapper;
 
-    @PostMapping("/send")
-    public List<MessageDto> send() {
-        return Collections.emptyList();
+    @MessageMapping("/send")
+    public void send() {
+
     }
 }
