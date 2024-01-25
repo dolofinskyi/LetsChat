@@ -52,10 +52,10 @@ public class UserService implements CrudService<User, String> {
                 .build();
     }
 
-    public List<User> findUsersByPrefix(String prefix) {
+    public List<User> findUsersByPrefix(String prefix, String username) {
         return listAll()
                 .stream()
-                .filter(user -> user.getUsername().startsWith(prefix))
+                .filter(user -> (user.getUsername().startsWith(prefix) && !user.getUsername().equals(username)))
                 .toList();
     }
 
