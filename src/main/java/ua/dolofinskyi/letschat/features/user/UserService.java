@@ -60,7 +60,10 @@ public class UserService implements CrudService<User, String> {
     }
 
     public User findByUsername(String username) {
-        return userRepository.findById(username)
+        return listAll()
+                .stream()
+                .filter(user -> user.getUsername().equals(username))
+                .findFirst()
                 .orElseThrow(() -> new UsernameNotFoundException(username));
     }
 
