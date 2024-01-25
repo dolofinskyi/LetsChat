@@ -16,6 +16,7 @@ import java.util.Set;
 @Builder
 public class User implements UserDetails {
     @Id
+    private final String id;
     private String username;
     private String password;
     private String sessionId;
