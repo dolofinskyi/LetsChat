@@ -1,4 +1,4 @@
-const socket = new SockJS('/ws');
+const socket = new SockJS('/api/v1/websocket');
 const client = Stomp.over(socket);
 
 const onConnected = () => {

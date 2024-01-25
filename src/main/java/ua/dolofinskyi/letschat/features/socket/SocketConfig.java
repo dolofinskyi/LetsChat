@@ -14,7 +14,9 @@ public class SocketConfig implements WebSocketConfigurer {
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(socketConnectionHandler(), "/ws").setAllowedOriginPatterns("*").withSockJS();
+        registry.addHandler(socketConnectionHandler(), "/api/v1/websocket")
+                .setAllowedOriginPatterns("*")
+                .withSockJS();
     }
 
     @Bean
