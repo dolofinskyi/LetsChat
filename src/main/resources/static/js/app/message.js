@@ -8,4 +8,5 @@ sendButton.onclick = () => {
         'content': inputSend.value
     }
     inputSend.value = '';
+    client.send("/api/v1/message/send", {}, JSON.stringify(message));
 }

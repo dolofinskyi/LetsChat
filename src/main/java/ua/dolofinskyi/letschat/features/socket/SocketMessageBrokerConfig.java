@@ -21,7 +21,7 @@ public class SocketMessageBrokerConfig implements WebSocketMessageBrokerConfigur
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
-        config.enableSimpleBroker("/user", "/app");
+        config.enableSimpleBroker("/user");
         config.setApplicationDestinationPrefixes("/api/v1/message");
         config.setUserDestinationPrefix("/user");
     }
@@ -29,7 +29,6 @@ public class SocketMessageBrokerConfig implements WebSocketMessageBrokerConfigur
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/api/v1/websocket")
-                .setAllowedOriginPatterns("*")
                 .withSockJS();
     }
 
