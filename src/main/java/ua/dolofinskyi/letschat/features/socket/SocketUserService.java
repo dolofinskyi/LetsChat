@@ -1,4 +1,4 @@
-package ua.dolofinskyi.letschat.features.socket.user;
+package ua.dolofinskyi.letschat.features.socket;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
