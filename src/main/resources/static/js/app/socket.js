@@ -6,7 +6,8 @@ const onMessage = message => {
 }
 
 const onConnected = () => {
-    client.subscribe(`/user/${user}/messages/queue`, onMessage);
+    let sessionId = socket._transport.url.split('/')[7];
+    client.subscribe(`/user/${sessionId}/queue/messages`, onMessage);
 };
 
 const onError = () => {
