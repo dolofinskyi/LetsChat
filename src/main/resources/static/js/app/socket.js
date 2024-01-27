@@ -1,8 +1,12 @@
 const socket = new SockJS('/api/v1/websocket');
 const client = Stomp.over(socket);
 
-const onConnected = () => {
+const onMessage = message => {
+    console.log(message);
+}
 
+const onConnected = () => {
+    client.subscribe(`/user/${user}/messages/queue`, onMessage);
 };
 
 const onError = () => {

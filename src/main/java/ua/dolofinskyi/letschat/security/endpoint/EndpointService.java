@@ -5,8 +5,8 @@ import java.util.List;
 
 @Service
 public class EndpointService {
-    private final List<String> SECURED_URL_PATTERNS = List.of("/app/**", "/api/**", "/ws");
-    private final List<String> SECURED_URLS = List.of("/app", "/api", "/ws");
+    private final List<String> SECURED_URL_PATTERNS = List.of("/app/**", "/api/**");
+    private final List<String> SECURED_URLS = List.of("/app", "/api");
 
     public List<String> getSecuredUrlPatterns() {
         return List.copyOf(SECURED_URL_PATTERNS);
