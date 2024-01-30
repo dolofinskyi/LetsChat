@@ -38,15 +38,17 @@ public class UserService implements CrudService<User, String> {
     }
 
     public User createUser(String username, String password, String secret) {
-        return User.builder()
-                .username(username)
-                .password(password)
-                .secret(secret)
-                .status(UserStatus.ONLINE)
-                .enabled(true)
-                .accountNonExpired(true)
-                .accountNonLocked(true)
-                .build();
+        return add(
+                User.builder()
+                    .username(username)
+                    .password(password)
+                    .secret(secret)
+                    .status(UserStatus.ONLINE)
+                    .enabled(true)
+                    .accountNonExpired(true)
+                    .accountNonLocked(true)
+                    .build()
+        );
     }
 
     public List<User> findUsersByPrefix(String prefix, String username) {
