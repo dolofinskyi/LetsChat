@@ -35,4 +35,16 @@ public class ChatService implements CrudService<Chat, String> {
     public List<Chat> listAll() {
         return chatRepository.findAll();
     }
+
+    public Chat findChatByUsers(List<String> users) {
+        return listAll().stream()
+                .filter(chat -> chat.getUsers().containsAll(users))
+                .findFirst()
+                .orElseThrow();
+    }
+
+    public boolean isChatExist(List<String> users) {
+        return listAll().stream()
+                .anyMatch(chat -> chat.getUsers().containsAll(users));
+    }
 }
