@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ua.dolofinskyi.letschat.features.mapper.Mapper;
 
+import java.util.Collections;
 import java.util.List;
 
 @Component
@@ -27,7 +28,14 @@ public class ChatMapper implements Mapper<Chat, ChatDto> {
                 .build();
     }
 
+    public List<Chat> chatsToEntities(List<String> chats) {
+        if (chats == null) {
+            return Collections.emptyList();
+        }
+        return chats.stream().map(chatService::get).toList();
+    }
+
     public List<ChatDto> chatsToDtos(List<String> chats) {
-        return toDtos(chats.stream().map(chatService::get).toList());
+        return toDtos(chatsToEntities(chats));
     }
 }
