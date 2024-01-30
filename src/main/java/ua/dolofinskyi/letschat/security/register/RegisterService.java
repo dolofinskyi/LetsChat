@@ -24,13 +24,13 @@ public class RegisterService {
         if (!valid(details)) {
             return AuthenticationResponse.builder().build();
         }
-        User user = userService.add(
-                userService.createUser(
-                        details.getUsername(),
-                        passwordEncoder.encode(details.getPassword()),
-                        jwtService.generateSecret()
-                )
+
+        User user = userService.createUser(
+                details.getUsername(),
+                passwordEncoder.encode(details.getPassword()),
+                jwtService.generateSecret()
         );
+
         String token = jwtService.generateToken(user);
         authenticationService.authenticate(user.getUsername());
         jwtService.setJwtCookies(response, user.getUsername(), token);
