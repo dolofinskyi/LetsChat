@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.dolofinskyi.letschat.features.crud.CrudService;
 import ua.dolofinskyi.letschat.features.user.User;
+import ua.dolofinskyi.letschat.features.user.UserMapper;
 import ua.dolofinskyi.letschat.features.user.UserService;
 
 import java.util.Collections;
@@ -16,6 +17,7 @@ import java.util.List;
 public class ChatService implements CrudService<Chat, String> {
     private final ChatRepository chatRepository;
     private final UserService userService;
+    private final UserMapper userMapper;
 
     @Override
     public Chat add(Chat entity) {
@@ -51,7 +53,7 @@ public class ChatService implements CrudService<Chat, String> {
                         .build()
         );
 
-        for (User user: usernames.stream().map(userService::findByUsername).toList()) {
+        for (User user: userMapper.usernamesToEntities(usernames)) {
             user.getChats().add(chat.getId());
             userService.update(user);
         }
