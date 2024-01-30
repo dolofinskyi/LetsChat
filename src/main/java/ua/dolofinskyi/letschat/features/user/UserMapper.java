@@ -23,8 +23,11 @@ public class UserMapper implements Mapper<User, UserDto> {
                 .status(entity.getStatus())
                 .build();
     }
+    public List<User> usernamesToEntities(List<String> usernames) {
+        return usernames.stream().map(userService::findByUsername).toList();
+    }
 
     public List<UserDto> usernamesToDtos(List<String> usernames) {
-        return toDtos(usernames.stream().map(userService::findByUsername).toList());
+        return toDtos(usernamesToEntities(usernames));
     }
 }
