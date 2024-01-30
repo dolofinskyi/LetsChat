@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ua.dolofinskyi.letschat.features.mapper.Mapper;
 
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
 public class UserMapper implements Mapper<User, UserDto> {
@@ -20,5 +22,9 @@ public class UserMapper implements Mapper<User, UserDto> {
                 .username(entity.getUsername())
                 .status(entity.getStatus())
                 .build();
+    }
+
+    public List<UserDto> usernamesToDtos(List<String> usernames) {
+        return toDtos(usernames.stream().map(userService::findByUsername).toList());
     }
 }
