@@ -34,10 +34,7 @@ public class UserService implements CrudService<User, String> {
 
     @Override
     public List<User> listAll() {
-        List<User> list = new ArrayList<>();
-        Iterator<User> iterator = userRepository.findAll().iterator();
-        iterator.forEachRemaining(list::add);
-        return list;
+        return userRepository.findAll();
     }
 
     public User createUser(String username, String password, String secret) {

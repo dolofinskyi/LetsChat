@@ -4,8 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ua.dolofinskyi.letschat.features.crud.CrudService;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -35,9 +33,6 @@ public class ChatService implements CrudService<Chat, String> {
 
     @Override
     public List<Chat> listAll() {
-        List<Chat> list = new ArrayList<>();
-        Iterator<Chat> iterator = chatRepository.findAll().iterator();
-        iterator.forEachRemaining(list::add);
-        return list;
+        return chatRepository.findAll();
     }
 }
