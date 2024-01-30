@@ -2,7 +2,10 @@ package ua.dolofinskyi.letschat.features.chat;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ua.dolofinskyi.letschat.features.crud.CrudService;
+import ua.dolofinskyi.letschat.features.user.User;
+import ua.dolofinskyi.letschat.features.user.UserService;
 
 import java.util.Collections;
 import java.util.List;
@@ -12,6 +15,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class ChatService implements CrudService<Chat, String> {
     private final ChatRepository chatRepository;
+    private final UserService userService;
 
     @Override
     public Chat add(Chat entity) {
@@ -38,33 +42,32 @@ public class ChatService implements CrudService<Chat, String> {
         return chatRepository.findAll();
     }
 
-    public Chat createChat(Set<String> users) {
-        return add(
+    @Transactional
+    public Chat createChat(Set<String> usernames) {
+        Chat chat = add(
                 Chat.builder()
-                        .users(users)
+                        .users(usernames)
                         .messages(Collections.emptySet())
                         .build()
         );
+
+        for (User user: usernames.stream().map(userService::findByUsername).toList()) {
+            user.getChats().add(chat.getId());
+            userService.update(user);
+        }
+
+        return chat;
     }
 
-    public Chat createChat() {
-        return add(
-                Chat.builder()
-                        .users(Collections.emptySet())
-                        .messages(Collections.emptySet())
-                        .build()
-        );
-    }
-
-    public Chat findChatByUsers(Set<String> users) {
+    public Chat findChatByUsers(Set<String> usernames) {
         return listAll().stream()
-                .filter(chat -> chat.getUsers().containsAll(users))
+                .filter(chat -> chat.getUsers().containsAll(usernames))
                 .findFirst()
                 .orElseThrow();
     }
 
-    public boolean isChatExist(Set<String> users) {
+    public boolean isChatExist(Set<String> usernames) {
         return listAll().stream()
-                .anyMatch(chat -> chat.getUsers().containsAll(users));
+                .anyMatch(chat -> chat.getUsers().containsAll(usernames));
     }
 }
