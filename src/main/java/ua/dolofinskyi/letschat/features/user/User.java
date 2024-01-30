@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Set;
+import java.util.List;
 
 @Data
 @RedisHash
@@ -21,7 +21,7 @@ public class User implements UserDetails {
     private String password;
     private String sessionId;
     private String secret;
-    private final Set<String> chats;
+    private final List<String> chats;
     private UserStatus status;
     private boolean accountNonExpired;
     private boolean accountNonLocked;

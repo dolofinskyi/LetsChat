@@ -11,7 +11,6 @@ import ua.dolofinskyi.letschat.features.user.User;
 import ua.dolofinskyi.letschat.features.user.UserService;
 
 import java.util.List;
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -49,7 +48,7 @@ public class MessageService implements CrudService<Message, String> {
 
     @Transactional
     public void sendMessage(MessageDto messageDto) {
-        Set<String> usernames = Set.of(messageDto.getFrom(), messageDto.getTo());
+        List<String> usernames = List.of(messageDto.getFrom(), messageDto.getTo());
         User toUser = userService.findByUsername(messageDto.getTo());
 
         Chat chat = chatService.isChatExist(usernames) ?

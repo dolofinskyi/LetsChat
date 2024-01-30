@@ -8,8 +8,8 @@ import ua.dolofinskyi.letschat.features.user.User;
 import ua.dolofinskyi.letschat.features.user.UserService;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -43,11 +43,11 @@ public class ChatService implements CrudService<Chat, String> {
     }
 
     @Transactional
-    public Chat createChat(Set<String> usernames) {
+    public Chat createChat(List<String> usernames) {
         Chat chat = add(
                 Chat.builder()
                         .users(usernames)
-                        .messages(Collections.emptySet())
+                        .messages(Collections.emptyList())
                         .build()
         );
 
@@ -59,15 +59,15 @@ public class ChatService implements CrudService<Chat, String> {
         return chat;
     }
 
-    public Chat findChatByUsers(Set<String> usernames) {
+    public Chat findChatByUsers(List<String> usernames) {
         return listAll().stream()
-                .filter(chat -> chat.getUsers().containsAll(usernames))
+                .filter(chat -> new HashSet<>(chat.getUsers()).containsAll(usernames))
                 .findFirst()
                 .orElseThrow();
     }
 
-    public boolean isChatExist(Set<String> usernames) {
+    public boolean isChatExist(List<String> usernames) {
         return listAll().stream()
-                .anyMatch(chat -> chat.getUsers().containsAll(usernames));
+                .anyMatch(chat -> new HashSet<>(chat.getUsers()).containsAll(usernames));
     }
 }
