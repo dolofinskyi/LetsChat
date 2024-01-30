@@ -5,7 +5,7 @@ import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 
-import java.util.Set;
+import java.util.List;
 
 @Data
 @RedisHash
@@ -13,8 +13,8 @@ import java.util.Set;
 public class Chat {
     @Id
     private final String id;
-    private final Set<String> users;
-    private final Set<String> messages;
+    private final List<String> users;
+    private final List<String> messages;
 
     @Override
     public boolean equals(Object o) {
