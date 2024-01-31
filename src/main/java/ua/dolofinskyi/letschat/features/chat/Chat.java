@@ -15,17 +15,4 @@ public class Chat {
     private final String id;
     private final List<String> users;
     private final List<String> messages;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Chat chat = (Chat) o;
-        return id.equals(chat.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return id.hashCode();
-    }
 }
