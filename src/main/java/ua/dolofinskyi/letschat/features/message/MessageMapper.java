@@ -26,15 +26,19 @@ public class MessageMapper implements Mapper<Message, MessageDto> {
                 .build();
     }
 
-    public MessageDto messageSendRequestToDto(String from, MessageSend messageSend) {
+    public MessageDto messageSendRequestToDto(String from, MessageSendRequest messageSendRequest) {
         return MessageDto.builder()
                 .from(from)
-                .to(messageSend.getTo())
-                .content(messageSend.getContent())
+                .to(messageSendRequest.getTo())
+                .content(messageSendRequest.getContent())
                 .build();
     }
 
-    public Message messageSendRequestToEntity(String from, MessageSend messageSend) {
-        return toEntity(messageSendRequestToDto(from, messageSend));
+    public MessageSendResponse dtoToMessageSendResponse(MessageDto messageDto) {
+        return MessageSendResponse.builder()
+                .from(messageDto.getFrom())
+                .to(messageDto.getTo())
+                .content(messageDto.getContent())
+                .build();
     }
 }

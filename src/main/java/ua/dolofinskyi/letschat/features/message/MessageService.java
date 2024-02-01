@@ -47,20 +47,21 @@ public class MessageService implements CrudService<Message, String> {
     }
 
     @Transactional
-    public void sendMessage(String from, MessageSend messageSend) {
-        List<String> usernames = List.of(from, messageSend.getTo());
-        User toUser = userService.findByUsername(messageSend.getTo());
+    public void sendMessage(MessageDto dto) {
+        List<String> usernames = List.of(dto.getFrom(), dto.getTo());
+        User toUser = userService.findByUsername(dto.getTo());
 
         Chat chat = chatService.isChatExist(usernames) ?
                 chatService.findChatByUsers(usernames) :
                 chatService.createChat(usernames);
 
-        Message message = add(messageMapper.messageSendRequestToEntity(from, messageSend));
+        Message message = add(messageMapper.toEntity(dto));
+
         String destination = String.format("/user/%s/queue/messages", toUser.getSessionId());
 
         chat.getMessages().add(message.getId());
         chatService.update(chat);
 
-        template.convertAndSend(destination, messageMapper.toDto(message));
+        template.convertAndSend(destination, messageMapper.dtoToMessageSendResponse(dto));
     }
 }
