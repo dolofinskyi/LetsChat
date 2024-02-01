@@ -3,7 +3,6 @@ const sendButton = document.querySelector(".send-button");
 
 sendButton.onclick = () => {
     let message = {
-        'from': user,
         'to': selectedUser,
         'content': inputSend.value
     }

@@ -58,6 +58,14 @@ public class UserService implements CrudService<User, String> {
                 .toList();
     }
 
+    public User findBySessionId(String sessionId) {
+        return listAll()
+                .stream()
+                .filter(user -> user.getSessionId().equals(sessionId))
+                .findFirst()
+                .orElseThrow(() -> new UsernameNotFoundException(sessionId));
+    }
+
     public User findByUsername(String username) {
         return listAll()
                 .stream()
