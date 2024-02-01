@@ -5,8 +5,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import ua.dolofinskyi.letschat.features.chat.ChatDto;
-import ua.dolofinskyi.letschat.features.chat.ChatMapper;
 import ua.dolofinskyi.letschat.security.SecurityContextService;
 
 import java.util.List;
@@ -17,13 +15,12 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
     private final UserMapper userMapper;
-    private final ChatMapper chatMapper;
     private final SecurityContextService contextService;
 
     @GetMapping("/chats")
-    public List<ChatDto> chats() {
+    public List<UserDto> users() {
         User user = userService.findByUsername(contextService.getUsername());
-        return chatMapper.chatsToDtos(user.getChats());
+        return userMapper.usernamesToDtos(user.getChats());
     }
 
     @GetMapping("/list")

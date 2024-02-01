@@ -54,7 +54,11 @@ public class ChatService implements CrudService<Chat, String> {
         );
 
         for (User user: userMapper.usernamesToEntities(usernames)) {
-            user.getChats().add(chat.getId());
+            user.getChats().addAll(
+                    usernames.stream()
+                    .filter(username -> !username.equals(user.getUsername()))
+                    .toList()
+            );
             userService.update(user);
         }
 
