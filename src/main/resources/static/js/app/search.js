@@ -2,12 +2,15 @@ const chatList = document.querySelector(".chat-list");
 const emptyElement = document.querySelector(".people-list .empty-element");
 const inputSearch = document.querySelector(".input-search");
 const searchButton = document.querySelector(".search-button");
+
 const searchUrl = "/api/v1/user/search";
+const chatsUrl = "/api/v1/user/chats";
 
 inputSearch.oninput = async () => {
     if (inputSearch.value == '') {
         await removeChildrens(chatList);
-        // Get all user chats
+        let data = await fetch(chatsUrl).then(resp => resp.json());
+        data.forEach(user => createUser(user));
     }
 }
 
@@ -15,10 +18,10 @@ searchButton.onclick = async () => {
     await removeChildrens(chatList);
     let params = new URLSearchParams({'prefix': inputSearch.value});
     let data = await fetch(searchUrl + "?" + params.toString()).then(resp => resp.json());
-    data.forEach(user => createHtmlUser(user));
+    data.forEach(user => createUser(user));
 }
 
-async function createHtmlUser(user) {
+async function createUser(user) {
     const container = document.createElement('li');
     const label = document.createElement('label');
     const avatar = document.createElement('div');
