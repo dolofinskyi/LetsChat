@@ -1,10 +1,6 @@
 const socket = new SockJS('/api/v1/websocket');
 const client = Stomp.over(socket);
 
-const onMessage = message => {
-    console.log(message);
-}
-
 const onConnected = () => {
     let sessionId = socket._transport.url.split('/')[7];
     client.subscribe(`/user/${sessionId}/queue/messages`, onMessage);

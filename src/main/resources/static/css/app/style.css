@@ -198,6 +198,9 @@ input[name="user"]:not(:checked)::after {
 }
 
 .message-container .message-data {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
     padding-left: 6px;
     padding: 10px 0px;
     font-size: 13px;
@@ -207,7 +210,7 @@ input[name="user"]:not(:checked)::after {
     color: var(--description-color);
 }
 
-.message-container .message-data .message-user-username:hover {
+.message-container .message-data .from-user:hover {
     color: var(--main-color);
 }
 
