@@ -25,4 +25,16 @@ public class MessageMapper implements Mapper<Message, MessageDto> {
                 .content(entity.getContent())
                 .build();
     }
+
+    public MessageDto messageSendRequestToDto(String from, MessageSend messageSend) {
+        return MessageDto.builder()
+                .from(from)
+                .to(messageSend.getTo())
+                .content(messageSend.getContent())
+                .build();
+    }
+
+    public Message messageSendRequestToEntity(String from, MessageSend messageSend) {
+        return toEntity(messageSendRequestToDto(from, messageSend));
+    }
 }
