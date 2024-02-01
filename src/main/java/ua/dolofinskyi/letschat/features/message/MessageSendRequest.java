@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class MessageSend {
+public class MessageSendRequest {
     private String to;
     private String content;
 }
