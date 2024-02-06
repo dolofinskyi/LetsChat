@@ -13,7 +13,6 @@ import ua.dolofinskyi.letschat.security.authetication.AuthenticationService;
 import ua.dolofinskyi.letschat.security.authetication.CustomAuthenticationProvider;
 import ua.dolofinskyi.letschat.security.cookie.CookieService;
 import ua.dolofinskyi.letschat.security.endpoint.EndpointService;
-import ua.dolofinskyi.letschat.security.filter.FilterService;
 import ua.dolofinskyi.letschat.security.jwt.JwtFilter;
 import ua.dolofinskyi.letschat.security.jwt.JwtService;
 
@@ -23,7 +22,6 @@ import ua.dolofinskyi.letschat.security.jwt.JwtService;
 public class SecurityConfig {
     private final JwtService jwtService;
     private final AuthenticationService authenticationService;
-    private final FilterService filterService;
     private final EndpointService endpointService;
     private final CookieService cookieService;
     private final CustomAuthenticationProvider authenticationProvider;
@@ -55,7 +53,7 @@ public class SecurityConfig {
         return new JwtFilter(
                 jwtService,
                 authenticationService,
-                filterService,
+                endpointService,
                 cookieService
         );
     }

@@ -4,6 +4,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
+import ua.dolofinskyi.letschat.features.user.UserFoundException;
+import ua.dolofinskyi.letschat.features.user.UserNotFoundException;
 import ua.dolofinskyi.letschat.security.login.LoginDetails;
 import ua.dolofinskyi.letschat.security.login.LoginService;
 import ua.dolofinskyi.letschat.security.register.RegisterDetails;
@@ -23,8 +26,10 @@ public class AuthenticationController {
 
     @PostMapping("/login")
     @ResponseBody
-    public AuthenticationResponse postLogin(HttpServletResponse response, @RequestBody LoginDetails details) {
-        return loginService.login(response, details);
+    public RedirectView postLogin(HttpServletResponse response, @RequestBody LoginDetails details)
+            throws UserNotFoundException {
+        loginService.login(response, details);
+        return new RedirectView("/app");
     }
 
     @GetMapping("/register")
@@ -34,7 +39,9 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     @ResponseBody
-    public AuthenticationResponse postRegister(HttpServletResponse response, @RequestBody RegisterDetails details) {
-        return registerService.register(response, details);
+    public RedirectView postRegister(HttpServletResponse response, @RequestBody RegisterDetails details)
+            throws UserFoundException {
+        registerService.register(response, details);
+        return new RedirectView("/app");
     }
 }

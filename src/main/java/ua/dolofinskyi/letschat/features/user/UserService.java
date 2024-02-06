@@ -1,7 +1,6 @@
 package ua.dolofinskyi.letschat.features.user;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import ua.dolofinskyi.letschat.features.crud.CrudService;
 
@@ -63,18 +62,22 @@ public class UserService implements CrudService<User, String> {
                 .stream()
                 .filter(user -> user.getSessionId().equals(sessionId))
                 .findFirst()
-                .orElseThrow(() -> new UsernameNotFoundException(sessionId));
+                .orElseThrow(UserNotFoundException::new);
     }
 
-    public User findByUsername(String username) {
+    private Optional<User> findOptionalByUsername(String username) {
         return listAll()
                 .stream()
                 .filter(user -> user.getUsername().equals(username))
-                .findFirst()
-                .orElseThrow(() -> new UsernameNotFoundException(username));
+                .findFirst();
+    }
+
+    public User findByUsername(String username) {
+        return findOptionalByUsername(username)
+                .orElseThrow(UserNotFoundException::new);
     }
 
     public boolean isUserExist(String username) {
-        return userRepository.findById(username).isPresent();
+        return findOptionalByUsername(username).isPresent();
     }
 }
