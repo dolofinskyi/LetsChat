@@ -36,6 +36,6 @@ public class CookieService {
                 return cookie.getValue();
             }
         }
-        throw new NullPointerException();
+        return null;
     }
 }

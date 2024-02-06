@@ -5,9 +5,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ua.dolofinskyi.letschat.features.user.User;
+import ua.dolofinskyi.letschat.features.user.UserFoundException;
 import ua.dolofinskyi.letschat.features.user.UserService;
 import ua.dolofinskyi.letschat.security.authetication.AuthenticationService;
-import ua.dolofinskyi.letschat.security.authetication.AuthenticationResponse;
 import ua.dolofinskyi.letschat.security.jwt.JwtService;
 
 import java.util.Objects;
@@ -20,10 +20,9 @@ public class RegisterService {
     private final JwtService jwtService;
     private final AuthenticationService authenticationService;
 
-    public AuthenticationResponse register(HttpServletResponse response, RegisterDetails details) {
-        if (!valid(details)) {
-            return AuthenticationResponse.builder().build();
-        }
+    public void register(HttpServletResponse response, RegisterDetails details)
+            throws UserFoundException {
+        validate(details);
 
         User user = userService.createUser(
                 details.getUsername(),
@@ -34,15 +33,15 @@ public class RegisterService {
         String token = jwtService.generateToken(user);
         authenticationService.authenticate(user.getUsername());
         jwtService.setJwtCookies(response, user.getUsername(), token);
-        return AuthenticationResponse.builder().token(token).build();
     }
 
-    public boolean valid(RegisterDetails details) {
-        if (userService.isUserExist(details.getUsername())) {
-            //TODO throw UserFoundException
-            return false;
+    public void validate(RegisterDetails details) throws UserFoundException {
+        if (!Objects.equals(details.getPassword(), details.getRepeatPassword())) {
+            throw new InvalidRegisterCredentialsException();
         }
-        //TODO throw InvalidPasswordException
-        return Objects.equals(details.getPassword(), details.getRepeatPassword());
+
+        if (userService.isUserExist(details.getUsername())) {
+            throw new UserFoundException();
+        }
     }
 }
