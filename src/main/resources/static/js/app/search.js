@@ -45,7 +45,7 @@ async function createUser(user) {
 
     avatar.innerHTML = user.username[0].toUpperCase();
     name.innerHTML = user.username;
-    status.innerHTML = user.status;
+    status.innerHTML = user.status.toLowerCase();
 
     chatList.appendChild(container);
     container.appendChild(label);
