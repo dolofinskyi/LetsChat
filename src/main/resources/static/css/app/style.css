@@ -12,6 +12,11 @@
     display: flex;
 }
 
+.chat-header,
+.search-container {
+    border-bottom: 1px solid var(--main-color);
+}
+
 .chat-app .people-list {
     min-width: 300px;
     width: 20%;
@@ -61,6 +66,7 @@
     flex-direction: column;
     height: 87.5%;
     overflow-y: scroll;
+    border-right: 1px solid var(--main-color);
 }
 
 .user-container {
@@ -68,6 +74,7 @@
     gap: 15px;
     padding: 25px;
     transition: 100ms;
+    border-bottom: 1px solid var(--main-color);
 }
 
 .user-container .name {
@@ -220,6 +227,7 @@ input[name="user"]:not(:checked)::after {
     justify-content: space-evenly;
     height: 10%;
     padding: 15px;
+    border-top: 1px solid var(--main-color);
 }
 
 .send-container .input-send {
