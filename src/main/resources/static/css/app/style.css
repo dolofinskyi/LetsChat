@@ -1,6 +1,48 @@
+header {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 10%;
+    border-bottom: 1px solid var(--main-color);
+}
+
+header .search-container {
+    min-width: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 15px;
+}
+
+header .search-container .input-search {
+    padding: 5px;
+    width: 80%;
+    border: none;
+    border-bottom: 1px solid var(--main-color);
+    background-color: transparent;
+    color: var(--main-color);
+}
+
+header .search-container .input-search:focus {
+    outline: none;
+}
+
+header .search-container .search-button,
+.chat .send-container .send-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+header .search-container .search-button {
+    width: 20%;
+    height: 100%;
+    padding: 10px;
+}
+
 .container {
     width: 100%;
-    height: 100%;
+    height: 90%;
 }
 
 .card {
@@ -12,14 +54,8 @@
     display: flex;
 }
 
-.chat-header,
-.search-container {
-    border-bottom: 1px solid var(--main-color);
-}
-
 .chat-app .people-list {
     min-width: 300px;
-    width: 20%;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -27,46 +63,19 @@
 }
 
 .chat-app .chat {
-    width: 85%;
+    width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
 }
 
-.people-list .search-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    width: 100%;
-    height: 12.5%;
-    padding: 15px;
-}
-
-.people-list .search-container .input-search {
-    padding: 5px;
-    width: 75%;
-    border: none;
-    border-bottom: 1px solid var(--main-color);
-}
-
-.people-list .search-container .input-search:focus {
-    outline: none;
-}
-
-.people-list .search-container .search-button,
-.chat .send-container .send-button {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 7.5px 15px;
-}
-
 .people-list .chat-list {
     display: flex;
     flex-direction: column;
-    height: 87.5%;
+    height: 100%;
     overflow-y: scroll;
     border-right: 1px solid var(--main-color);
+    position: relative;
 }
 
 .user-container {
@@ -127,23 +136,25 @@ input[name="user"]:not(:checked)::after {
     flex-direction: row;
     align-items: center;
     height: 12.5%;
-    padding: 15px;
     gap: 10px;
 }
 
-.chat .chat-header .avatar {
-    margin-left: 10px;
-}
-
-.chat .chat-header .chat-about {
-    padding-left: 10px
-}
-
 .chat .chat-header .user-info-container {
+    display: flex;
+    padding: 20px;
+    gap: 15px;
     flex-direction: row;
 }
 
+.chat .chat-header .chat-about {
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
+}
+
 .link {
+    display: flex;
+    align-items: center;
     color: var(--description-color);
     padding: 20px;
 }
@@ -165,6 +176,16 @@ input[name="user"]:not(:checked)::after {
     height: 77.5%;
     padding: 20px;
     overflow-y: scroll;
+    position: relative;
+}
+
+.chat-list .no-chats-found,
+.chat .chat-history .no-messages-found {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    color: var(--description-color);
 }
 
 .chat .chat-history ul {
@@ -230,15 +251,21 @@ input[name="user"]:not(:checked)::after {
     border-top: 1px solid var(--main-color);
 }
 
-.send-container .input-send {
-    width: 90%;
+.chat .send-container .input-send {
+    width: 95%;
     padding: 5px;
     border: none;
     border-bottom: 1px solid var(--main-color);
 }
 
-.send-container .input-send:focus {
+.chat .send-container .input-send:focus {
     outline: none;
+}
+
+.chat .send-container .send-button {
+    width: 5%;
+    height: 100%;
+    padding: 15px;
 }
 
 .float-right {
@@ -251,18 +278,14 @@ input[name="user"]:not(:checked)::after {
 
 @media only screen and (max-width: 767px) {
     .chat-app .people-list {
-        width: 100%;
-        overflow-x: auto;
-        left: -15%;
         display: none
     }
-    .chat-app .people-list.open {
-        left: 0
+
+    header .search-container {
+        display: none
     }
+
     .chat-app .chat {
         width: 100%;
-    }
-    .chat-app .chat .chat-header {
-        border-radius: 0.55rem 0.55rem 0 0
     }
 }
