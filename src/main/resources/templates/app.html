@@ -24,8 +24,8 @@
             <button class="search-button">/></button>
         </div>
         <div class="header-buttons float-right">
-            <a class="link profile" href="#" th:text="${'Hello, ' + username + '!'}"></a>
-            <a class="link logout" href="/auth/logout">logout</a>
+            <a class="link profile" href="#">Profile</a>
+            <a class="link logout" href="/auth/logout">Logout</a>
         </div>
     </header>
 
@@ -90,6 +90,10 @@
             </div>
     </div>
     </div>
+
+    <script th:inline="javascript">
+        const user = [[${username}]];
+    </script>
 
     <script th:src="@{/js/app/socket.js}"></script>
     <script th:src="@{/js/app/app.js}"></script>
