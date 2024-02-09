@@ -5,6 +5,7 @@ const searchButton = document.querySelector(".search-button");
 
 const searchUrl = "/api/v1/user/search";
 const chatsUrl = "/api/v1/user/chats";
+const chatUrl = "/api/v1/user/chat";
 
 inputSearch.oninput = async () => {
     if (inputSearch.value == '') {
@@ -39,7 +40,11 @@ async function createUser(user) {
     radio.setAttribute("type", "radio");
     radio.setAttribute("name", "user");
 
-    radio.onclick = () => {
+    radio.onclick = async () => {
+        await removeChildrens(chatHistory);
+        let params = new URLSearchParams({'username': user.username});
+        let messages = await fetch(chatUrl + "?" + params.toString()).then(resp => resp.json());
+        messages.forEach(message => createMessage(message));
         selectedUser = user.username;
     };
 

@@ -1,5 +1,6 @@
 const socket = new SockJS('/api/v1/websocket');
 const client = Stomp.over(socket);
+var selectedUser;
 
 const onConnected = () => {
     let sessionId = socket._transport.url.split('/')[7];

@@ -202,7 +202,15 @@ input[name="user"]:not(:checked)::after {
     margin-bottom: 0px;
 }
 
-.chat .chat-history .message-container {
+.chat .chat-history .other-container {
+    height: fit-content;
+    max-width: 75%;
+}
+
+.chat .chat-history .my-container {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
     height: fit-content;
     max-width: 75%;
 }
@@ -225,7 +233,7 @@ input[name="user"]:not(:checked)::after {
     background-color: var(--highlight-color);
 }
 
-.message-container .message-data {
+.message-data {
     display: flex;
     flex-direction: row;
     gap: 15px;
@@ -234,11 +242,11 @@ input[name="user"]:not(:checked)::after {
     font-size: 13px;
 }
 
-.message-container .message-data * {
+.message-data * {
     color: var(--description-color);
 }
 
-.message-container .message-data .from-user:hover {
+.message-data .from-user:hover {
     color: var(--main-color);
 }
 

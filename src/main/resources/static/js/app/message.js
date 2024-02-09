@@ -5,7 +5,8 @@ const sendButton = document.querySelector(".send-button");
 const onMessage = async(data) => {
     const message = JSON.parse(data.body);
 
-    if(selectedUser == message.from) {
+    if(user == message.from && selectedUser == message.to ||
+       user == message.to && selectedUser == message.from) {
         await createMessage(message);
     }
 }
@@ -20,12 +21,20 @@ async function createMessage(message) {
 
     let messageContent = document.createElement('div');
 
-    messageContainer.classList.add('message-container');
     messageData.classList.add('message-data');
     fromUser.classList.add('from-user');
     dataTime.classList.add('message-data-time');
     messageContent.classList.add('message');
-    messageContent.classList.add('other-message');
+
+    if (user == message.from) {
+        messageContainer.classList.add('float-right');
+        messageContainer.classList.add('my-container');
+        messageContent.classList.add('my-message');
+    } else {
+        messageContainer.classList.add('other-container');
+        messageContent.classList.add('other-message');
+    }
+
 
     fromUser.innerHTML = message.from;
     designElement.innerHTML = "->";

@@ -9,7 +9,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 @Data
 @RedisHash
@@ -21,7 +20,6 @@ public class User implements UserDetails {
     private String password;
     private String sessionId;
     private String secret;
-    private final List<String> chats;
     private UserStatus status;
     private boolean accountNonExpired;
     private boolean accountNonLocked;
@@ -56,12 +54,5 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return enabled;
-    }
-
-    public List<String> getChats() {
-        if (chats == null) {
-            return new ArrayList<>();
-        }
-        return chats;
     }
 }

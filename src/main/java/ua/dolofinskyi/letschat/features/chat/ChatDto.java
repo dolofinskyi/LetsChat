@@ -9,5 +9,4 @@ import java.util.List;
 @Builder
 public class ChatDto {
     private List<String> users;
-    private List<String> messages;
 }
