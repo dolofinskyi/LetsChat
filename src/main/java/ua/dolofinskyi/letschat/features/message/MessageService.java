@@ -46,14 +46,14 @@ public class MessageService implements CrudService<Message, String> {
         return messageRepository.findAll();
     }
 
-
+    @Transactional
     public void sendMessage(MessageDto dto) {
         List<String> usernames = List.of(dto.getFrom(), dto.getTo());
         List<User> users = userMapper.usernamesToEntities(usernames);
 
         Chat chat = chatService.findChatByUsernames(usernames);
 
-        add(
+        Message message = add(
                 Message.builder()
                         .from(dto.getFrom())
                         .to(dto.getTo())
@@ -68,10 +68,9 @@ public class MessageService implements CrudService<Message, String> {
         }
     }
 
-    public List<Message> findMessagesInChat(String chatId) {
+    public List<Message> findMessagesByChatId(String chatId) {
         return listAll().stream()
-                .filter(message -> message.getChatId() != null &&
-                        message.getChatId().equals(chatId))
+                .filter(message -> message.getChatId().equals(chatId))
                 .toList();
     }
 }

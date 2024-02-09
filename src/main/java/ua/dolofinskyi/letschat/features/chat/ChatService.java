@@ -44,7 +44,7 @@ public class ChatService implements CrudService<Chat, String> {
         );
     }
 
-    public List<String> findChatsByUsername(String username) {
+    public List<String> findChatUsernamesByUsername(String username) {
         List<String> result = new ArrayList<>();
 
         for(Chat chat: listAll()) {
@@ -71,7 +71,7 @@ public class ChatService implements CrudService<Chat, String> {
                 .orElseThrow();
     }
 
-    private boolean isChatExist(List<String> usernames) {
+    public boolean isChatExist(List<String> usernames) {
         return listAll().stream()
                 .anyMatch(chat -> new HashSet<>(chat.getUsers()).containsAll(usernames));
     }
