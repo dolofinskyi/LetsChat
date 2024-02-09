@@ -28,7 +28,7 @@ public class UserController {
     @GetMapping("/chats")
     public List<UserDto> chats() {
         String username = contextService.getUsername();
-        return userMapper.usernamesToDtos(chatService.findChatsByUsername(username));
+        return userMapper.usernamesToDtos(chatService.findChatUsernamesByUsername(username));
     }
 
     @GetMapping("/chat")
@@ -36,12 +36,12 @@ public class UserController {
         String from = contextService.getUsername();
         List<String> usernames = List.of(from, to);
         Chat chat = chatService.findChatByUsernames(usernames);
-        return messageMapper.toDtos(messageService.findMessagesInChat(chat.getId()));
+        return messageMapper.toDtos(messageService.findMessagesByChatId(chat.getId()));
     }
 
     @GetMapping("/list")
-    public List<User> list() {
-        return userService.listAll();
+    public List<UserDto> list() {
+        return userMapper.toDtos(userService.listAll());
     }
 
     @GetMapping("/search")
