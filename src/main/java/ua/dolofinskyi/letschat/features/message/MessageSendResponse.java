@@ -1,8 +1,10 @@
 package ua.dolofinskyi.letschat.features.message;
 
-import lombok.Builder;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
-@Builder
+@Getter
+@AllArgsConstructor
 public class MessageSendResponse {
     private String from;
     private String to;
