@@ -1,4 +1,4 @@
-package ua.dolofinskyi.letschat.security;
+package ua.dolofinskyi.letschat.security.context;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;

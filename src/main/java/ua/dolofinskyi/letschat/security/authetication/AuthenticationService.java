@@ -3,7 +3,7 @@ package ua.dolofinskyi.letschat.security.authetication;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
-import ua.dolofinskyi.letschat.security.SecurityContextService;
+import ua.dolofinskyi.letschat.security.context.SecurityContextService;
 
 @Component
 @RequiredArgsConstructor

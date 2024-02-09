@@ -10,7 +10,7 @@ import ua.dolofinskyi.letschat.features.chat.ChatService;
 import ua.dolofinskyi.letschat.features.message.MessageDto;
 import ua.dolofinskyi.letschat.features.message.MessageMapper;
 import ua.dolofinskyi.letschat.features.message.MessageService;
-import ua.dolofinskyi.letschat.security.SecurityContextService;
+import ua.dolofinskyi.letschat.security.context.SecurityContextService;
 
 import java.util.List;
 
