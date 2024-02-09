@@ -46,20 +46,32 @@ public class MessageService implements CrudService<Message, String> {
         return messageRepository.findAll();
     }
 
-    @Transactional
+
     public void sendMessage(MessageDto dto) {
         List<String> usernames = List.of(dto.getFrom(), dto.getTo());
         List<User> users = userMapper.usernamesToEntities(usernames);
 
         Chat chat = chatService.findChatByUsernames(usernames);
-        Message message = add(messageMapper.toEntity(dto));
 
-        chat.getMessages().add(message.getId());
-        chatService.update(chat);
+        add(
+                Message.builder()
+                        .from(dto.getFrom())
+                        .to(dto.getTo())
+                        .content(dto.getContent())
+                        .chatId(chat.getId())
+                        .build()
+        );
 
         for (User user: users) {
             String destination = String.format("/user/%s/queue/messages", user.getSessionId());
             template.convertAndSend(destination, messageMapper.dtoToMessageSendResponse(dto));
         }
+    }
+
+    public List<Message> findMessagesInChat(String chatId) {
+        return listAll().stream()
+                .filter(message -> message.getChatId() != null &&
+                        message.getChatId().equals(chatId))
+                .toList();
     }
 }

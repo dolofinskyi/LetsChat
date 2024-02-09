@@ -14,4 +14,5 @@ public class Message {
     private final String from;
     private final String to;
     private final String content;
+    private final String chatId;
 }

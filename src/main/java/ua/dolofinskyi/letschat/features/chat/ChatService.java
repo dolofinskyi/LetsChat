@@ -3,11 +3,8 @@ package ua.dolofinskyi.letschat.features.chat;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ua.dolofinskyi.letschat.features.crud.CrudService;
-import ua.dolofinskyi.letschat.features.user.User;
-import ua.dolofinskyi.letschat.features.user.UserMapper;
-import ua.dolofinskyi.letschat.features.user.UserService;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
@@ -15,8 +12,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ChatService implements CrudService<Chat, String> {
     private final ChatRepository chatRepository;
-    private final UserService userService;
-    private final UserMapper userMapper;
 
     @Override
     public Chat add(Chat entity) {
@@ -44,23 +39,25 @@ public class ChatService implements CrudService<Chat, String> {
     }
 
     private Chat createChat(List<String> usernames) {
-        Chat chat = add(
-                Chat.builder()
-                        .users(usernames)
-                        .messages(Collections.emptyList())
-                        .build()
+        return add(
+                Chat.builder().users(usernames).build()
         );
+    }
 
-        for (User user: userMapper.usernamesToEntities(usernames)) {
-            user.getChats().addAll(
-                    usernames.stream()
-                    .filter(username -> !username.equals(user.getUsername()))
-                    .toList()
-            );
-            userService.update(user);
+    public List<String> findChatsByUsername(String username) {
+        List<String> result = new ArrayList<>();
+
+        for(Chat chat: listAll()) {
+            if (chat.getUsers().contains(username)) {
+                for (String user: chat.getUsers()) {
+                    if (!user.equals(username)) {
+                        result.add(user);
+                    }
+                }
+            }
         }
 
-        return chat;
+        return result;
     }
 
     public Chat findChatByUsernames(List<String> usernames) {
