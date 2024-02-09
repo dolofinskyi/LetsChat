@@ -2,7 +2,6 @@ package ua.dolofinskyi.letschat.features.chat;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ua.dolofinskyi.letschat.features.crud.CrudService;
 import ua.dolofinskyi.letschat.features.user.User;
 import ua.dolofinskyi.letschat.features.user.UserMapper;
@@ -44,8 +43,7 @@ public class ChatService implements CrudService<Chat, String> {
         return chatRepository.findAll();
     }
 
-    @Transactional
-    public Chat createChat(List<String> usernames) {
+    private Chat createChat(List<String> usernames) {
         Chat chat = add(
                 Chat.builder()
                         .users(usernames)
@@ -65,14 +63,18 @@ public class ChatService implements CrudService<Chat, String> {
         return chat;
     }
 
-    public Chat findChatByUsers(List<String> usernames) {
+    public Chat findChatByUsernames(List<String> usernames) {
+        if (!isChatExist(usernames)) {
+            return createChat(usernames);
+        }
+
         return listAll().stream()
                 .filter(chat -> new HashSet<>(chat.getUsers()).containsAll(usernames))
                 .findFirst()
                 .orElseThrow();
     }
 
-    public boolean isChatExist(List<String> usernames) {
+    private boolean isChatExist(List<String> usernames) {
         return listAll().stream()
                 .anyMatch(chat -> new HashSet<>(chat.getUsers()).containsAll(usernames));
     }

@@ -8,7 +8,7 @@ import ua.dolofinskyi.letschat.features.chat.Chat;
 import ua.dolofinskyi.letschat.features.chat.ChatService;
 import ua.dolofinskyi.letschat.features.crud.CrudService;
 import ua.dolofinskyi.letschat.features.user.User;
-import ua.dolofinskyi.letschat.features.user.UserService;
+import ua.dolofinskyi.letschat.features.user.UserMapper;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ import java.util.List;
 public class MessageService implements CrudService<Message, String> {
     private final MessageRepository messageRepository;
     private final ChatService chatService;
-    private final UserService userService;
+    private final UserMapper userMapper;
     private final SimpMessagingTemplate template;
     private final MessageMapper messageMapper;
 
@@ -49,19 +49,17 @@ public class MessageService implements CrudService<Message, String> {
     @Transactional
     public void sendMessage(MessageDto dto) {
         List<String> usernames = List.of(dto.getFrom(), dto.getTo());
-        User toUser = userService.findByUsername(dto.getTo());
+        List<User> users = userMapper.usernamesToEntities(usernames);
 
-        Chat chat = chatService.isChatExist(usernames) ?
-                chatService.findChatByUsers(usernames) :
-                chatService.createChat(usernames);
-
+        Chat chat = chatService.findChatByUsernames(usernames);
         Message message = add(messageMapper.toEntity(dto));
-
-        String destination = String.format("/user/%s/queue/messages", toUser.getSessionId());
 
         chat.getMessages().add(message.getId());
         chatService.update(chat);
 
-        template.convertAndSend(destination, messageMapper.dtoToMessageSendResponse(dto));
+        for (User user: users) {
+            String destination = String.format("/user/%s/queue/messages", user.getSessionId());
+            template.convertAndSend(destination, messageMapper.dtoToMessageSendResponse(dto));
+        }
     }
 }

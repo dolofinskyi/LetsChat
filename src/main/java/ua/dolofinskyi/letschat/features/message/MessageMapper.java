@@ -35,10 +35,10 @@ public class MessageMapper implements Mapper<Message, MessageDto> {
     }
 
     public MessageSendResponse dtoToMessageSendResponse(MessageDto messageDto) {
-        return MessageSendResponse.builder()
-                .from(messageDto.getFrom())
-                .to(messageDto.getTo())
-                .content(messageDto.getContent())
-                .build();
+        return new MessageSendResponse(
+                messageDto.getFrom(),
+                messageDto.getTo(),
+                messageDto.getContent()
+        );
     }
 }
